@@ -20,15 +20,15 @@
     var CONFIG = {"hostname":"tongxinyou.github.io","root":"/tongju.github.io/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="#闭包  想要了解闭包之前得先知道上级作用域和堆栈内存释放问题。  ###上级作用于概念  函数的上级作用域在哪里创建创建的，上级作用域就是谁  1234567891011121314var a &#x3D; 10function foo()&amp;#123;console.log(a)&amp;#125;function sum() &amp;#123;var a &#x3D; 20foo()&amp;#125;sum()&#x2F;* 输出10&#x2F;">
+  <meta name="description" content="闭包 想要了解闭包之前得先知道上级作用域和堆栈内存释放问题。  上级作用于概念 函数的上级作用域在哪里创建创建的，上级作用域就是谁  1234567891011121314var a &#x3D; 10function foo()&amp;#123;console.log(a)&amp;#125;function sum() &amp;#123;var a &#x3D; 20foo()&amp;#125;sum()&#x2F;* 输出10&#x2F;   函数 foo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="js基础————闭包">
 <meta property="og:url" content="https://tongxinyou.github.io/2022/10/14/js%E5%9F%BA%E7%A1%80-%E9%97%AD%E5%8C%85/index.html">
 <meta property="og:site_name" content="墨白的博客">
-<meta property="og:description" content="#闭包  想要了解闭包之前得先知道上级作用域和堆栈内存释放问题。  ###上级作用于概念  函数的上级作用域在哪里创建创建的，上级作用域就是谁  1234567891011121314var a &#x3D; 10function foo()&amp;#123;console.log(a)&amp;#125;function sum() &amp;#123;var a &#x3D; 20foo()&amp;#125;sum()&#x2F;* 输出10&#x2F;">
+<meta property="og:description" content="闭包 想要了解闭包之前得先知道上级作用域和堆栈内存释放问题。  上级作用于概念 函数的上级作用域在哪里创建创建的，上级作用域就是谁  1234567891011121314var a &#x3D; 10function foo()&amp;#123;console.log(a)&amp;#125;function sum() &amp;#123;var a &#x3D; 20foo()&amp;#125;sum()&#x2F;* 输出10&#x2F;   函数 foo">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-10-14T08:29:51.437Z">
-<meta property="article:modified_time" content="2022-10-14T10:04:01.312Z">
+<meta property="article:modified_time" content="2022-10-14T10:07:54.080Z">
 <meta property="article:author" content="墨白">
 <meta name="twitter:card" content="summary">
 
@@ -175,7 +175,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-10-14 16:29:51 / 修改时间：18:04:01" itemprop="dateCreated datePublished" datetime="2022-10-14T16:29:51+08:00">2022-10-14</time>
+              <time title="创建时间：2022-10-14 16:29:51 / 修改时间：18:07:54" itemprop="dateCreated datePublished" datetime="2022-10-14T16:29:51+08:00">2022-10-14</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -198,12 +198,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>#闭包</p>
-<blockquote>
+        <h1 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h1><blockquote>
 <p>想要了解闭包之前得先知道上级作用域和堆栈内存释放问题。</p>
 </blockquote>
-<p>###上级作用于概念</p>
-<ul>
+<h3 id="上级作用于概念"><a href="#上级作用于概念" class="headerlink" title="上级作用于概念"></a>上级作用于概念</h3><ul>
 <li>函数的上级作用域在哪里创建创建的，上级作用域就是谁</li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">var a = 10</span><br><span class="line">function foo()&#123;</span><br><span class="line">console.log(a)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function sum() &#123;</span><br><span class="line">var a = 20</span><br><span class="line">foo()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">sum()</span><br><span class="line">/* 输出</span><br><span class="line">10</span><br><span class="line">/</span><br></pre></td></tr></table></figure>
@@ -211,18 +209,16 @@
 <blockquote>
 <p>函数 foo() 是在全局下创建的，所以 a 的上级作用域就是 window，输出就是 10</p>
 </blockquote>
-<p>###JS 堆栈内存释放</p>
-<ul>
+<h3 id="JS-堆栈内存释放"><a href="#JS-堆栈内存释放" class="headerlink" title="JS 堆栈内存释放"></a>JS 堆栈内存释放</h3><ul>
 <li>堆内存：存储引用类型值，对象类型就是键值对，函数就是代码字符串。</li>
 <li>堆内存释放：将引用类型的空间地址变量赋值成 null，或没有变量占用堆内存了浏览器就会释放掉这个地址</li>
 <li>栈内存：提供代码执行的环境和存储基本类型值。</li>
-<li>栈内存释放：一般当函数执行完后函数的私有作用域就会被释放掉。<blockquote>
+<li>栈内存释放：一般当函数执行完后函数的私有作用域就会被释放掉。</li>
+</ul>
+<blockquote>
 <p>但栈内存的释放也有特殊情况：① 函数执行完，但是函数的私有作用域内有内容被栈外的变量还在使用的，栈内存就不能释放里面的基本值也就不会被释放。② 全局下的栈内存只有页面被关闭的时候才会被释放</p>
 </blockquote>
-</li>
-</ul>
-<p>###闭包是什么</p>
-<blockquote>
+<h3 id="闭包是什么"><a href="#闭包是什么" class="headerlink" title="闭包是什么"></a>闭包是什么</h3><blockquote>
 <p>红宝书对于闭包的定义是：闭包就是指有权访问另一个函数作用域中的变量的函数。<br>MDN 对闭包的定义为：闭包是指那些能够访问自由变量的函数。这里的自由变量是外部函数作用域中的变量。</p>
 </blockquote>
 <blockquote>
@@ -234,20 +230,17 @@
 <blockquote>
 <p>这里的子函数 fo 内存就存在外部作用域的引用 a, b，所以这就会产生闭包</p>
 </blockquote>
-<p>###闭包变量存储的位置</p>
-<blockquote>
+<h3 id="闭包变量存储的位置"><a href="#闭包变量存储的位置" class="headerlink" title="闭包变量存储的位置"></a>闭包变量存储的位置</h3><blockquote>
 <p>闭包中的变量存储的位置是堆内存。</p>
 </blockquote>
 <ul>
 <li>假如闭包中的变量存储在栈内存中，那么栈的回收 会把处于栈顶的变量自动回收。所以闭包中的变量如果处于栈中那么变量被销毁后，闭包中的变量就没有了。所以闭包引用的变量是出于堆内存中的。</li>
 </ul>
-<p>###闭包的作用</p>
-<ul>
+<h3 id="闭包的作用"><a href="#闭包的作用" class="headerlink" title="闭包的作用"></a>闭包的作用</h3><ul>
 <li>保护函数的私有变量不受外部的干扰。形成不销毁的栈内存。</li>
 <li>把一些函数内的值保存下来。闭包可以实现方法和属性的私有化</li>
 </ul>
-<p>###闭包经典使用场景</p>
-<ol>
+<h3 id="闭包经典使用场景"><a href="#闭包经典使用场景" class="headerlink" title="闭包经典使用场景"></a>闭包经典使用场景</h3><ol>
 <li>返回一个函数</li>
 </ol>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var n = 10</span><br><span class="line">function fn()&#123;</span><br><span class="line">    var n =20</span><br><span class="line">    function f() &#123;</span><br><span class="line">       n++;</span><br><span class="line">       console.log(n)</span><br><span class="line">     &#125;</span><br><span class="line">    return f</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var x = fn()</span><br><span class="line">x() // 21</span><br></pre></td></tr></table></figure>
@@ -289,8 +282,7 @@
 </ol>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">// 节流</span><br><span class="line">function throttle(fn, timeout) &#123;</span><br><span class="line">    let timer = null</span><br><span class="line">    return function (...arg) &#123;</span><br><span class="line">        if(timer) return</span><br><span class="line">        timer = setTimeout(() =&gt; &#123;</span><br><span class="line">            fn.apply(this, arg)</span><br><span class="line">            timer = null</span><br><span class="line">        &#125;, timeout)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 防抖</span><br><span class="line">function debounce(fn, timeout)&#123;</span><br><span class="line">    let timer = null</span><br><span class="line">    return function(...arg)&#123;</span><br><span class="line">        clearTimeout(timer)</span><br><span class="line">        timer = setTimeout(() =&gt; &#123;</span><br><span class="line">            fn.apply(this, arg)</span><br><span class="line">        &#125;, timeout)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>###使用闭包需要注意什么</p>
-<blockquote>
+<h3 id="使用闭包需要注意什么"><a href="#使用闭包需要注意什么" class="headerlink" title="使用闭包需要注意什么"></a>使用闭包需要注意什么</h3><blockquote>
 <p>容易导致内存泄漏。闭包会携带包含其它的函数作用域，因此会比其他函数占用更多的内存。过度使用闭包会导致内存占用过多，所以要谨慎使用闭包。</p>
 </blockquote>
 
@@ -370,6 +362,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%97%AD%E5%8C%85"><span class="nav-number">1.</span> <span class="nav-text">闭包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8A%E7%BA%A7%E4%BD%9C%E7%94%A8%E4%BA%8E%E6%A6%82%E5%BF%B5"><span class="nav-number">1.0.1.</span> <span class="nav-text">上级作用于概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#JS-%E5%A0%86%E6%A0%88%E5%86%85%E5%AD%98%E9%87%8A%E6%94%BE"><span class="nav-number">1.0.2.</span> <span class="nav-text">JS 堆栈内存释放</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AD%E5%8C%85%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.0.3.</span> <span class="nav-text">闭包是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AD%E5%8C%85%E5%8F%98%E9%87%8F%E5%AD%98%E5%82%A8%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="nav-number">1.0.4.</span> <span class="nav-text">闭包变量存储的位置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AD%E5%8C%85%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">1.0.5.</span> <span class="nav-text">闭包的作用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AD%E5%8C%85%E7%BB%8F%E5%85%B8%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">1.0.6.</span> <span class="nav-text">闭包经典使用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E9%97%AD%E5%8C%85%E9%9C%80%E8%A6%81%E6%B3%A8%E6%84%8F%E4%BB%80%E4%B9%88"><span class="nav-number">1.0.7.</span> <span class="nav-text">使用闭包需要注意什么</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
