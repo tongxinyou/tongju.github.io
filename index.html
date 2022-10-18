@@ -148,6 +148,154 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongxinyou.github.io/2022/10/18/HTTP-TCP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/tongju.github.io/images/avatar.gif">
+      <meta itemprop="name" content="墨白">
+      <meta itemprop="description" content="个人技术成长之路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="墨白的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/tongju.github.io/2022/10/18/HTTP-TCP/" class="post-title-link" itemprop="url">TCP</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022 23" itemprop="dateCreated datePublished" datetime="2022-10-18T08:18:23+08:00">2022</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/tongju.github.io/categories/HTTP%E5%8D%8F%E8%AE%AE/" itemprop="url" rel="index"><span itemprop="name">HTTP协议</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="TCP-和-UDP-的区别"><a href="#TCP-和-UDP-的区别" class="headerlink" title="TCP 和 UDP 的区别"></a>TCP 和 UDP 的区别</h2><p>首先概括一下基本的区别:</p>
+<p><strong>TCP</strong> 是一个<strong>面向连接的</strong>、<strong>可靠的</strong>、<strong>基于字节流的传输层协议</strong>。</p>
+<p>而 <strong>UDP</strong> 是一个<strong>面向无连接的传输层协议</strong>。(就这么简单，其它 TCP 的特性也就没有了)。</p>
+<p>具体来分析，和 UDP 相比，TCP 有三大核心特性:</p>
+<ol>
+<li><p><strong>面向连接</strong>。所谓的连接，指的是客户端和服务器的连接，在双方互相通信之前，TCP 需要三次握手建立连接，而 UDP 没有相应建立连接的过程。</p>
+</li>
+<li><p><strong>可靠性</strong>。TCP 花了非常多的功夫保证连接的可靠，这个可靠性体现在哪些方面呢？一个是有状态，另一个是可控制</p>
+</li>
+</ol>
+<p>TCP 会精准记录哪些数据发送了，哪些数据被对方接收了，哪些没有被接收到，而且保证数据包按序到达，不允许半点差错。这是<strong>有状态</strong>。</p>
+<p>当意识到丢包了或者网络环境不佳，TCP 会根据具体情况调整自己的行为，控制自己的发送速度或者重发。这是<strong>可控制</strong>。</p>
+<p>相应的，UDP 就是<strong>无状态, 不可控</strong>的。</p>
+<ol start="3">
+<li><strong>面向字节流</strong>。UDP 的数据传输是基于数据报的，这是因为仅仅只是继承了 IP 层的特性，而 TCP 为了维护状态，将一个个 IP 包变成了字节流。</li>
+</ol>
+<h2 id="TCP-三次握手的过程"><a href="#TCP-三次握手的过程" class="headerlink" title="TCP 三次握手的过程"></a>TCP 三次握手的过程</h2><p>其目的是需要确认双方的两样能力: <strong>发送的能力</strong>和<strong>接收的能力</strong>。于是便会有下面的三次握手的过程:</p>
+<p><img src="/tongju.github.io/./HTTP%E5%8D%8F%E8%AE%AE-TCP/3.jpg" alt="三次握手"></p>
+<p>从最开始双方都处于 <strong>CLOSED</strong> 状态。然后服务端开始监听某个端口，进入了 <strong>LISTEN</strong> 状态。<br>然后客户端主动发起连接，发送 SYN , 自己变成了 <strong>SYN-SENT</strong> 状态。<br>服务端接收到，返回 <strong>SYN</strong> 和 <strong>ACK</strong>(对应客户端发来的 SYN)，自己变成了<strong>SYN-RCVD</strong>。<br>之后客户端再发送 <strong>ACK</strong> 给服务端，自己变成了 <strong>ESTABLISHED</strong> 状态；服务端收到 <strong>ACK</strong> 之后，也变成了 <strong>ESTABLISHED</strong> 状态。<br>另外需要提醒你注意的是，从图中可以看出，<strong>SYN</strong>是需要消耗一个序列号的，下次发送对应的 <strong>ACK</strong> 序列号要加 1，记住一个规则:</p>
+<blockquote>
+<p>凡是需要对端确认的，一定消耗 TCP 报文的序列号。</p>
+</blockquote>
+<p>SYN 需要对端的确认， 而 ACK 并不需要，因此 SYN 消耗一个序列号而 ACK 不需要。</p>
+<h4 id="为什么不是两次握手？"><a href="#为什么不是两次握手？" class="headerlink" title="为什么不是两次握手？"></a>为什么不是两次握手？</h4><p>根本原因: 无法确认客户端的接收能力。</p>
+<p>分析如下:</p>
+<p>如果是两次，你现在发了 SYN 报文想握手，但是这个包滞留在了当前的网络中迟迟没有到达，TCP 以为这是丢了包，于是重传，两次握手建立好了连接。</p>
+<p>看似没有问题，但是连接关闭后，如果这个滞留在网路中的包到达了服务端呢？这时候由于是两次握手，服务端只要接收到然后发送相应的数据包，就默认<strong>建立连接</strong>，但是现在客户端已经断开了。</p>
+<p>这就带来了连接资源的浪费。</p>
+<h4 id="为什么不是四次握手？"><a href="#为什么不是四次握手？" class="headerlink" title="为什么不是四次握手？"></a>为什么不是四次握手？</h4><p>三次握手的目的是确认双方<strong>发送</strong>和<strong>接收</strong>的能力，那四次握手可以嘛？</p>
+<p>当然可以，100 次都可以。但为了解决问题，三次就足够了，再多用处就不大了。</p>
+<h4 id="三次握手过程中可以携带数据么？"><a href="#三次握手过程中可以携带数据么？" class="headerlink" title="三次握手过程中可以携带数据么？"></a>三次握手过程中可以携带数据么？</h4><p>第三次握手的时候，可以携带。前两次握手不能携带数据。</p>
+<p>如果前两次握手能够携带数据，那么一旦有人想攻击服务器，那么他只需要在第一次握手中的 SYN 报文中放大量数据，那么服务器势必会消耗更多的时间和内存空间去处理这些数据，增大了服务器被攻击的风险。</p>
+<p>第三次握手的时候，客户端已经处于 <strong>ESTABLISHED</strong>状态，并且已经能够确认服务器的接收、发送能力正常，这个时候相对安全了，可以携带数据。</p>
+<h2 id="TCP-四次挥手的过程"><a href="#TCP-四次挥手的过程" class="headerlink" title="TCP 四次挥手的过程"></a>TCP 四次挥手的过程</h2><p><img src="/tongju.github.io/./HTTP%E5%8D%8F%E8%AE%AE-TCP/4.jpg" alt="四次挥手"></p>
+<p>刚开始双方处于 <strong>ESTABLISHED</strong> 状态。</p>
+<p>客户端要断开了，向服务器发送 <strong>FIN</strong> 报文，在 TCP 报文中的位置如下图:</p>
+<p><img src="/tongju.github.io/./HTTP%E5%8D%8F%E8%AE%AE-TCP/5.jpg" alt="FIN"></p>
+<p>发送后客户端变成了 <strong>FIN-WAIT-1</strong> 状态。注意, 这时候客户端同时也变成了 **half-close(半关闭)**状态，即无法向服务端发送报文，只能接收。</p>
+<p>服务端接收后向客户端确认，变成了 <strong>CLOSED-WAIT</strong> 状态。</p>
+<p>客户端接收到了服务端的确认，变成了 <strong>FIN-WAIT2</strong> 状态。</p>
+<p>随后，服务端向客户端发送 <strong>FIN</strong>，自己进入 <strong>LAST-ACK</strong> 状态，</p>
+<p>客户端收到服务端发来的 <strong>FIN</strong> 后，自己变成了 <strong>TIME-WAIT</strong> 状态，然后发送 <strong>ACK</strong> 给服务端。</p>
+<p>注意了，这个时候，客户端需要等待足够长的时间，具体来说，是 2 个 <strong>MSL(Maximum Segment Lifetime，报文最大生存时间)</strong>, 在这段时间内如果客户端没有收到服务端的重发请求，那么表示 ACK 成功到达，挥手结束，否则客户端重发 ACK。</p>
+<h4 id="等待-2MSL-的意义"><a href="#等待-2MSL-的意义" class="headerlink" title="等待 2MSL 的意义"></a>等待 2MSL 的意义</h4><p>如果不等待，客户端直接跑路，当服务端还有很多数据包要给客户端发，且还在路上的时候，若客户端的端口此时刚好被新的应用占用，那么就接收到了无用数据包，造成数据包混乱。所以，最保险的做法是等服务器发来的数据包都死翘翘再启动新的应用。</p>
+<p>那，照这样说一个 MSL 不就不够了吗，为什么要等待 2 MSL?</p>
+<ul>
+<li>1 个 MSL 确保四次挥手中主动关闭方最后的 ACK 报文最终能达到对端</li>
+<li>1 个 MSL 确保对端没有收到 ACK 重传的 FIN 报文可以到达</li>
+</ul>
+<p>这就是等待 2MSL 的意义。</p>
+<h4 id="为什么是四次挥手而不是三次？"><a href="#为什么是四次挥手而不是三次？" class="headerlink" title="为什么是四次挥手而不是三次？"></a>为什么是四次挥手而不是三次？</h4><p>因为服务端在接收到 <strong>FIN</strong>, 往往不会立即返回 <strong>FIN</strong>, 必须等到服务端所有的报文都发送完毕了，才能发 <strong>FIN</strong>。因此先发一个 <strong>ACK</strong> 表示已经收到客户端的 <strong>FIN</strong>，延迟一段时间才发 <strong>FIN</strong>。这就造成了四次挥手。</p>
+<p>如果是三次挥手会有什么问题？</p>
+<p>等于说服务端将 <strong>ACK</strong> 和 <strong>FIN</strong> 的发送合并为一次挥手，这个时候长时间的延迟可能会导致客户端误以为 <strong>FIN</strong> 没有到达客户端，从而让客户端不断的重发 <strong>FIN</strong>。</p>
+<h3 id="半连接队列和-SYN-Flood-攻击的关系"><a href="#半连接队列和-SYN-Flood-攻击的关系" class="headerlink" title="半连接队列和 SYN Flood 攻击的关系"></a>半连接队列和 SYN Flood 攻击的关系</h3><p>三次握手前，服务端的状态从 <strong>CLOSED</strong> 变为 <strong>LISTEN</strong>, 同时在内部创建了两个队列：<strong>半连接队列</strong>和<strong>全连接队列</strong>，即 <strong>SYN 队列</strong>和 <strong>ACCEPT 队列</strong>。</p>
+<h4 id="半连接队列"><a href="#半连接队列" class="headerlink" title="半连接队列"></a>半连接队列</h4><p>当客户端发送 SYN 到服务端，服务端收到以后回复 ACK 和 SYN，状态由 LISTEN 变为 SYN_RCVD，此时这个连接就被推入了 SYN 队列，也就是半连接队列。</p>
+<h4 id="全连接队列"><a href="#全连接队列" class="headerlink" title="全连接队列"></a>全连接队列</h4><p>当客户端返回 ACK, 服务端接收后，三次握手完成。这个时候连接等待被具体的应用取走，在被取走之前，它会被推入另外一个 TCP 维护的队列，也就是全连接队列。</p>
+<h4 id="SYN-Flood-攻击原理"><a href="#SYN-Flood-攻击原理" class="headerlink" title="SYN Flood 攻击原理"></a>SYN Flood 攻击原理</h4><p>SYN Flood 属于典型的 DoS&#x2F;DDoS 攻击。其攻击的原理很简单，就是用客户端在短时间内伪造大量不存在的 IP 地址，并向服务端疯狂发送 SYN。对于服务端而言，会产生两个危险的后果:</p>
+<ol>
+<li><p>处理大量的 SYN 包并返回对应 ACK, 势必有大量连接处于 SYN_RCVD 状态，从而占满整个半连接队列，无法处理正常的请求。</p>
+</li>
+<li><p>由于是不存在的 IP，服务端长时间收不到客户端的 ACK，会导致服务端不断重发数据，直到耗尽服务端的资源。</p>
+</li>
+</ol>
+<h4 id="如何应对-SYN-Flood-攻击？"><a href="#如何应对-SYN-Flood-攻击？" class="headerlink" title="如何应对 SYN Flood 攻击？"></a>如何应对 SYN Flood 攻击？</h4><ol>
+<li><p>增加 SYN 连接，也就是增加半连接队列的容量。</p>
+</li>
+<li><p>减少 SYN + ACK 重试次数，避免大量的超时重发。</p>
+</li>
+<li><p>利用 SYN Cookie 技术，在服务端接收到 SYN 后不立即分配连接资源，而是根据这个 SYN 计算出一个 Cookie，连同第二次握手回复给客户端，在客户端回复 ACK 的时候带上这个 Cookie 值，服务端验证 Cookie 合法之后才分配连接资源。</p>
+</li>
+</ol>
+<h2 id="TCP-快速打开的原理-TFO"><a href="#TCP-快速打开的原理-TFO" class="headerlink" title="TCP 快速打开的原理(TFO)"></a>TCP 快速打开的原理(TFO)</h2><h3 id="TFO-流程"><a href="#TFO-流程" class="headerlink" title="TFO 流程"></a>TFO 流程</h3><h4 id="首轮三次握手"><a href="#首轮三次握手" class="headerlink" title="首轮三次握手"></a>首轮三次握手</h4><p>首先客户端发送 SYN 给服务端，服务端接收到。<br>注意哦！现在服务端不是立刻回复 SYN + ACK，而是通过计算得到一个 SYN Cookie, 将这个 Cookie 放到 TCP 报文的 Fast Open 选项中，然后才给客户端返回。</p>
+<p>客户端拿到这个 Cookie 的值缓存下来。后面正常完成三次握手。</p>
+<p>首轮三次握手就是这样的流程。而后面的三次握手就不一样啦！</p>
+<h4 id="后面的三次握手"><a href="#后面的三次握手" class="headerlink" title="后面的三次握手"></a>后面的三次握手</h4><p>在后面的三次握手中，客户端会将之前缓存的 Cookie、SYN 和 HTTP 请求发送给服务端，服务端验证了 Cookie 的合法性，如果不合法直接丢弃；如果是合法的，那么就正常返回 SYN + ACK。</p>
+<p>重点来了，现在服务端能向客户端发 HTTP 响应了！这是最显著的改变，三次握手还没建立，仅仅验证了 Cookie 的合法性，就可以返回 HTTP 响应了。</p>
+<p>当然，客户端的 ACK 还得正常传过来，不然怎么叫三次握手嘛。</p>
+<p>流程如下：<br><img src="/tongju.github.io/./HTTP-TCP/6.jpg" alt="TFO"></p>
+<blockquote>
+<p>注意: 客户端最后握手的 ACK 不一定要等到服务端的 HTTP 响应到达才发送，两个过程没有任何关系。</p>
+</blockquote>
+<h3 id="TFO-的优势"><a href="#TFO-的优势" class="headerlink" title="TFO 的优势"></a>TFO 的优势</h3><p>TFO 的优势并不在与首轮三次握手，而在于后面的握手，在拿到客户端的 Cookie 并验证通过以后，可以直接返回 HTTP 响应，充分利用了 1 个 RTT(Round-Trip Time，往返时延)的时间<strong>提前进行数据传输</strong>，积累起来还是一个比较大的优势。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://tongxinyou.github.io/2022/10/16/HTTP%E5%8D%8F%E8%AE%AE%E2%80%94%E2%80%94%E6%A6%82%E5%BF%B5%E4%B8%8E%E7%BB%93%E6%9E%84/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -578,7 +726,7 @@
 <blockquote>
 <p>概括以上内容，个人理解：把函数执行，形成私有上下文，并且保存和保护私有变量的机制，称之为“闭包” ，它是一种机制。</p>
 </blockquote>
-<p>内部的函数存在外部作用域的引用就会导致闭包。从上面介绍的上级作用域的概念中其实就有闭包的例子 <font color =red>return f </font>就是一个表现形式。</p>
+<p>内部的函数存在外部作用域的引用就会导致闭包。从上面介绍的上级作用域的概念中其实就有闭包的例子 <font color="red">return f </font>就是一个表现形式。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">var a = 0</span><br><span class="line">function foo()&#123;</span><br><span class="line">    var b =14</span><br><span class="line">    function fo()&#123;</span><br><span class="line">        console.log(a, b)</span><br><span class="line">    &#125;</span><br><span class="line">    fo()</span><br><span class="line">&#125;</span><br><span class="line">foo()</span><br></pre></td></tr></table></figure>
 
 <blockquote>
@@ -789,7 +937,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/tongju.github.io/archives">
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">5</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
