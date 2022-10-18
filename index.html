@@ -212,7 +212,7 @@
 <li><strong>面向字节流</strong>。UDP 的数据传输是基于数据报的，这是因为仅仅只是继承了 IP 层的特性，而 TCP 为了维护状态，将一个个 IP 包变成了字节流。</li>
 </ol>
 <h2 id="TCP-三次握手的过程"><a href="#TCP-三次握手的过程" class="headerlink" title="TCP 三次握手的过程"></a>TCP 三次握手的过程</h2><p>其目的是需要确认双方的两样能力: <strong>发送的能力</strong>和<strong>接收的能力</strong>。于是便会有下面的三次握手的过程:</p>
-<p><img src="/tongju.github.io/./HTTP-TCP/3.jpg" alt="三次握手"></p>
+<p><img src="/tongju.github.io/2022/10/18/HTTP-TCP/3.jpg" alt="三次握手"></p>
 <p>从最开始双方都处于 <strong>CLOSED</strong> 状态。然后服务端开始监听某个端口，进入了 <strong>LISTEN</strong> 状态。<br>然后客户端主动发起连接，发送 SYN , 自己变成了 <strong>SYN-SENT</strong> 状态。<br>服务端接收到，返回 <strong>SYN</strong> 和 <strong>ACK</strong>(对应客户端发来的 SYN)，自己变成了<strong>SYN-RCVD</strong>。<br>之后客户端再发送 <strong>ACK</strong> 给服务端，自己变成了 <strong>ESTABLISHED</strong> 状态；服务端收到 <strong>ACK</strong> 之后，也变成了 <strong>ESTABLISHED</strong> 状态。<br>另外需要提醒你注意的是，从图中可以看出，<strong>SYN</strong>是需要消耗一个序列号的，下次发送对应的 <strong>ACK</strong> 序列号要加 1，记住一个规则:</p>
 <blockquote>
 <p>凡是需要对端确认的，一定消耗 TCP 报文的序列号。</p>
@@ -228,10 +228,10 @@
 <h4 id="三次握手过程中可以携带数据么？"><a href="#三次握手过程中可以携带数据么？" class="headerlink" title="三次握手过程中可以携带数据么？"></a>三次握手过程中可以携带数据么？</h4><p>第三次握手的时候，可以携带。前两次握手不能携带数据。</p>
 <p>如果前两次握手能够携带数据，那么一旦有人想攻击服务器，那么他只需要在第一次握手中的 SYN 报文中放大量数据，那么服务器势必会消耗更多的时间和内存空间去处理这些数据，增大了服务器被攻击的风险。</p>
 <p>第三次握手的时候，客户端已经处于 <strong>ESTABLISHED</strong>状态，并且已经能够确认服务器的接收、发送能力正常，这个时候相对安全了，可以携带数据。</p>
-<h2 id="TCP-四次挥手的过程"><a href="#TCP-四次挥手的过程" class="headerlink" title="TCP 四次挥手的过程"></a>TCP 四次挥手的过程</h2><p><img src="/tongju.github.io/./HTTP-TCP/4.jpg" alt="四次挥手"></p>
+<h2 id="TCP-四次挥手的过程"><a href="#TCP-四次挥手的过程" class="headerlink" title="TCP 四次挥手的过程"></a>TCP 四次挥手的过程</h2><p><img src="/tongju.github.io/2022/10/18/HTTP-TCP/4.jpg" alt="四次挥手"></p>
 <p>刚开始双方处于 <strong>ESTABLISHED</strong> 状态。</p>
 <p>客户端要断开了，向服务器发送 <strong>FIN</strong> 报文，在 TCP 报文中的位置如下图:</p>
-<p><img src="/tongju.github.io/./HTTP-TCP/5.jpg" alt="FIN"></p>
+<p><img src="/tongju.github.io/2022/10/18/HTTP-TCP/5.jpg" alt="FIN"></p>
 <p>发送后客户端变成了 <strong>FIN-WAIT-1</strong> 状态。注意, 这时候客户端同时也变成了 **half-close(半关闭)**状态，即无法向服务端发送报文，只能接收。</p>
 <p>服务端接收后向客户端确认，变成了 <strong>CLOSED-WAIT</strong> 状态。</p>
 <p>客户端接收到了服务端的确认，变成了 <strong>FIN-WAIT2</strong> 状态。</p>
