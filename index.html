@@ -148,6 +148,454 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongxinyou.github.io/2022/11/01/js%E5%9F%BA%E7%A1%80-%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/tongju.github.io/images/avatar.gif">
+      <meta itemprop="name" content="墨白">
+      <meta itemprop="description" content="个人技术成长之路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="墨白的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/tongju.github.io/2022/11/01/js%E5%9F%BA%E7%A1%80-%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/" class="post-title-link" itemprop="url">js基础——数组方法</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/tongju.github.io/categories/js%E5%9F%BA%E7%A1%80/" itemprop="url" rel="index"><span itemprop="name">js基础</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="ES6-新增构造方法"><a href="#ES6-新增构造方法" class="headerlink" title="ES6 新增构造方法"></a>ES6 新增构造方法</h2><h3 id="Array-form"><a href="#Array-form" class="headerlink" title="Array.form()"></a>Array.form()</h3><p><strong>1. 语法</strong></p>
+<blockquote>
+<p>Array.from(arrayLike[, mapFn[, thisArg]])</p>
+</blockquote>
+<p><strong>2. 作用</strong></p>
+<p><strong>将类数组与可迭代对象转化为数组</strong></p>
+<p><strong>3. 参数</strong></p>
+<blockquote>
+<p>arrayLike<br>想要转换成数组的伪数组对象或可迭代对象。<br>mapFn  可选<br>如果指定了该参数，新数组中的每个元素会执行该回调函数。<br>thisArg  可选<br>可选参数，执行回调函数  mapFn  时  this  对象。</p>
+</blockquote>
+<p><strong>4. 返回值</strong></p>
+<p><strong>转化后的新数组</strong></p>
+<p><strong>5.注意事项</strong></p>
+<ul>
+<li>该类数组对象必须具有 length 属性，用于指定数组的长度。如果没有 length 属性，那么 转换后的数组是一个空数组。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 没有length属性返回空数组</span><br><span class="line">let obj = &#123;</span><br><span class="line">    0:&#x27;a&#x27;,</span><br><span class="line">    1:&#x27;b&#x27;,</span><br><span class="line">    2:&#x27;c&#x27;</span><br><span class="line">&#125;</span><br><span class="line">Array.from(obj); // []</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>该类数组对象的属性名必须为数值型或字符串型的数字，且数字必须是以 0 开始</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">// key不是数字或包含数字的字符串返回undefined</span><br><span class="line">let obj = &#123;</span><br><span class="line">    name:&#x27;九九欧&#x27;,</span><br><span class="line">    age:18,</span><br><span class="line">    length:2</span><br><span class="line">&#125;</span><br><span class="line">Array.from(obj); // [undefined, undefined]</span><br><span class="line"></span><br><span class="line">// key是数字但不是以0开始</span><br><span class="line">let obj = &#123;</span><br><span class="line">    2:&#x27;a&#x27;,</span><br><span class="line">    3:&#x27;b&#x27;,</span><br><span class="line">    4:&#x27;c&#x27;,</span><br><span class="line">    length:3</span><br><span class="line">&#125;</span><br><span class="line">Array.from(obj); // [undefined, undefined, &quot;a&quot;]</span><br><span class="line"></span><br><span class="line">// 满足所有条件</span><br><span class="line">let obj = &#123;</span><br><span class="line">    0:&#x27;a&#x27;,</span><br><span class="line">    1:&#x27;b&#x27;,</span><br><span class="line">    2:&#x27;c&#x27;,</span><br><span class="line">    length:3</span><br><span class="line">&#125;</span><br><span class="line">Array.from(obj); // [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Array.from()在转化对象时，要求过于苛刻，因此不适用于转化对象，它的应用场景主要是以下几个</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">从类数组对象(arguments)生成数组</span><br><span class="line">let fn = function()&#123;</span><br><span class="line">        console.log(Array.from(arguments));</span><br><span class="line">    &#125;</span><br><span class="line">    fn(1,2,3) // [1,2,3]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">从 String 生成数组</span><br><span class="line">    Array.from(&#x27;九九欧&#x27;); // [&quot;九&quot;,&quot;九&quot;,&quot;欧&quot;]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">从Set生成数组</span><br><span class="line">    Array.from(new Set([&quot;九&quot;,&quot;九&quot;,&quot;欧&quot;,&quot;欧&quot;])); // [&quot;九&quot;,&quot;欧&quot;]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">从Map生成数组</span><br><span class="line">    Array.from(new Map([[1, &#x27;a&#x27;], [2, &#x27;b&#x27;]])); // [[1, &#x27;a&#x27;], [2, &#x27;b&#x27;]]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">生成一个从0开始到指定数字的定长连续数组</span><br><span class="line">    Array.from(&#123;length: 10&#125;, (v, i) =&gt; i); // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="Array-of"><a href="#Array-of" class="headerlink" title="Array.of()"></a>Array.of()</h3><p><strong>1.语法</strong></p>
+<blockquote>
+<p>Array.of(element0[, element1[, …[, elementN]]])</p>
+</blockquote>
+<p><strong>2.作用</strong><br><strong>将参数依次转化为数组中的项</strong></p>
+<p><strong>3.参数</strong><br><strong>任意个参数，将按顺序成为返回数组中的元素</strong></p>
+<p><strong>4.返回值</strong><br><strong>转化后的新数组</strong></p>
+<p><strong>5.Array.of()与 Array()的区别</strong><br>当传入多个参数时，两者之间没有区别</p>
+<p>当传入一个参数且参数为数字时，区别如下</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Array.of(9);</span><br><span class="line">// [9]</span><br><span class="line">Array(9);</span><br><span class="line">// [empty × 9]</span><br></pre></td></tr></table></figure>
+
+<h2 id="判断数组的方法"><a href="#判断数组的方法" class="headerlink" title="判断数组的方法"></a>判断数组的方法</h2><h3 id="Array-isArray"><a href="#Array-isArray" class="headerlink" title="Array.isArray()"></a>Array.isArray()</h3><p><strong>1.语法</strong></p>
+<blockquote>
+<p>Array.isArray(obj)</p>
+</blockquote>
+<p><strong>2.作用</strong><br><strong>判断传递的值是否是一个数组</strong></p>
+<p><strong>3.参数</strong><br><strong>需要判断的值</strong></p>
+<p><strong>4.返回值</strong></p>
+<blockquote>
+<p><strong>布尔值</strong></p>
+</blockquote>
+<p><strong>5.实例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Array.isArray([])           // true</span><br><span class="line">Array.isArray(&#123;&#125;)           // false</span><br><span class="line">Array.isArray(&#x27;a&#x27;)          // false</span><br><span class="line">Array.isArray(1)            // false</span><br><span class="line">Array.isArray(null)         // false</span><br><span class="line">Array.isArray(undefined)    // false</span><br></pre></td></tr></table></figure>
+
+<h2 id="改变自身值的方法"><a href="#改变自身值的方法" class="headerlink" title="改变自身值的方法"></a>改变自身值的方法</h2><h3 id="pop"><a href="#pop" class="headerlink" title="pop"></a>pop</h3><p><strong>1.语法</strong></p>
+<blockquote>
+<p>arr.pop()</p>
+</blockquote>
+<p><strong>2.作用</strong></p>
+<blockquote>
+<p><strong>删除数组中最后一个元素</strong></p>
+</blockquote>
+<p><strong>3.参数</strong><br>无</p>
+<p><strong>4.返回值</strong></p>
+<blockquote>
+<p><strong>从数组中删除的元素（数组为空时，返回 undefined）</strong></p>
+</blockquote>
+<p><strong>5.实例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let ary = [1,2,3,4];</span><br><span class="line">console.log(ary.pop()); // 4</span><br><span class="line">console.log(ary);       // [1,2,3]</span><br></pre></td></tr></table></figure>
+
+<h3 id="push"><a href="#push" class="headerlink" title="push"></a>push</h3><p><strong>1.语法</strong></p>
+<blockquote>
+<p>arr.push(element1, …, elementN)</p>
+</blockquote>
+<p><strong>2.作用</strong></p>
+<blockquote>
+<p><strong>将一个或多个元素添加到数组的末尾</strong></p>
+</blockquote>
+<p><strong>3.参数</strong><br>被添加到数组末尾的元素</p>
+<p><strong>4.返回值</strong></p>
+<blockquote>
+<p><strong>新数组的长度</strong></p>
+</blockquote>
+<p><strong>5.实例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let ary = [1,2,3];</span><br><span class="line">ary.push(4);</span><br><span class="line">console.log(ary); // [1,2,3,4]</span><br></pre></td></tr></table></figure>
+
+<p><strong>6.应用</strong></p>
+<p>合并两个数组</p>
+<p>思路：利用 apply 改变 this 的指向，以及 apply 传递参数时会将数组中的项以此传递</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let ary1 = [1,2,3];</span><br><span class="line">let ary2 = [4,5,6];</span><br><span class="line">let ary3 = Array.prototype.push.apply(ary1,ary2)</span><br><span class="line">console.log(ary1); // [1,2,3,4,5,6]</span><br><span class="line">console.log(ary3); // 6</span><br></pre></td></tr></table></figure>
+
+<h3 id="shift"><a href="#shift" class="headerlink" title="shift"></a>shift</h3><p><strong>1.语法</strong></p>
+<blockquote>
+<p>arr.shift()</p>
+</blockquote>
+<p><strong>2.作用</strong></p>
+<blockquote>
+<p><strong>删除数组的第一个元素</strong></p>
+</blockquote>
+<p><strong>3.参数</strong><br>无</p>
+<p><strong>4.返回值</strong></p>
+<blockquote>
+<p><strong>被删除的元素</strong></p>
+</blockquote>
+<p><strong>5.实例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let ary = [1,2,3];</span><br><span class="line">let result = ary.shift();</span><br><span class="line">console.log(ary);     // [2,3]</span><br><span class="line">console.log(result);  // 1</span><br></pre></td></tr></table></figure>
+
+<h3 id="unShift"><a href="#unShift" class="headerlink" title="unShift"></a>unShift</h3><p><strong>1.语法</strong></p>
+<blockquote>
+<p>arr.unShift(element1, …, elementN)</p>
+</blockquote>
+<p><strong>2.作用</strong></p>
+<blockquote>
+<p><strong>在数组的开头添加一个或多个元素</strong></p>
+</blockquote>
+<p><strong>3.参数</strong><br>要添加到数组开头的元素或多个元素</p>
+<p><strong>4.返回值</strong></p>
+<blockquote>
+<p><strong>新数组的长度</strong></p>
+</blockquote>
+<p><strong>5.实例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">let ary = [4, 5, 6];</span><br><span class="line">let result = ary.unShift(1, 2, 3);</span><br><span class="line">console.log(ary);    // [1, 2, 3, 4, 5, 6]</span><br><span class="line">console.log(result); // 6</span><br></pre></td></tr></table></figure>
+
+<h3 id="sort"><a href="#sort" class="headerlink" title="sort"></a>sort</h3><p><strong>1.语法</strong></p>
+<blockquote>
+<p>arr.sort([compareFunction])</p>
+</blockquote>
+<p><strong>2.作用</strong></p>
+<blockquote>
+<p><strong>数组的元素进行排序</strong></p>
+</blockquote>
+<p><strong>3.参数</strong></p>
+<blockquote>
+<p>compareFunction  可选<br>用来指定按某种顺序进行排列的函数。<br>如果省略，则元素按照转换为的字符串的各个字符的 Unicode 位点进行排序。<br>firstEl<br>第一个用于比较的元素。<br>secondEl<br>第二个用于比较的元素。</p>
+</blockquote>
+<p><strong>4.返回值</strong></p>
+<blockquote>
+<p><strong>排序后的数组</strong></p>
+</blockquote>
+<p><strong>5.实例</strong><br>若 compareFn(a, b) &lt; 0，那么 a 将排到 b 前面（数字升序）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let ary = [2,4,1,6,7,3,8,9,5];</span><br><span class="line">ary.sort(function(a,b)&#123;</span><br><span class="line">    return a-b;</span><br><span class="line">&#125;)</span><br><span class="line">console.log(ary); // [1,2,3,4,5,6,7,8,9]</span><br></pre></td></tr></table></figure>
+
+<p>若 compareFn(a, b) &gt; 0，那么 a , b 将调换位置（数字降序）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">let ary = [2,4,1,6,7,3,8,9,5];</span><br><span class="line">ary.sort(function(a,b)&#123;</span><br><span class="line">    return b-a;</span><br><span class="line">&#125;)</span><br><span class="line">console.log(ary); // [9,8,7,6,5,4,3,2,1]</span><br></pre></td></tr></table></figure>
+
+<p>省略参数时，元素按照转换为的字符串的各个字符的 Unicode 位点进行排序</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">let ary = [9,8,7,6,5,4,3,2,1,0]</span><br><span class="line">ary.sort();</span><br><span class="line">console.log(ary);  // [0,1,2,3,4,5,6,7,8,9]</span><br><span class="line"></span><br><span class="line">let ary = [&quot;e&quot;,&quot;d&quot;,&quot;c&quot;,&quot;b&quot;,&quot;a&quot;]</span><br><span class="line">ary.sort();</span><br><span class="line">console.log(ary); // [&quot;a&quot;,&quot;b&quot;,&quot;c&quot;,&quot;d&quot;,&quot;e&quot;]</span><br></pre></td></tr></table></figure>
+
+<h3 id="splice"><a href="#splice" class="headerlink" title="splice"></a>splice</h3><p><strong>1.语法</strong></p>
+<blockquote>
+<p>array.splice(start[, deleteCount[, item1[, item2[, …]]]])</p>
+</blockquote>
+<p><strong>2.作用</strong></p>
+<blockquote>
+<p><strong>删除或替换现有元素、原地添加新的元素</strong></p>
+</blockquote>
+<p><strong>3.参数</strong></p>
+<blockquote>
+<p>start</p>
+<ul>
+<li>指定修改的开始位置（从 0 计数）。如果超出了数组的长度，则从数组末尾开始添加内容；</li>
+<li>如果是负值，则表示从数组末位开始的第几位（从-1 计数，这意味着-n 是倒数第 n 个元素并且等价于 array.length-n）；</li>
+<li>如果负数的绝对值大于数组的长度，则表示开始位置为第 0 位。</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>deleteCount （可选）</p>
+<ul>
+<li>整数，表示要移除的数组元素的个数。</li>
+<li>如果  deleteCount  大于  start  之后的元素的总数，则从  start  后面的元素都将被删除（含第  start  位）。</li>
+<li>如果  deleteCount  被省略了，或者它的值大于等于 array.length - start</li>
+<li>(也就是说如果它大于或者等于 start 之后的所有元素的数量)，那么 start 之后数组的所有元素都会被删除。</li>
+<li>如果  deleteCount  是 0 或者负数，则不移除元素。这种情况下，至少应添加一个新元素。</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>item1, item2, …（可选）</p>
+<ul>
+<li>要添加进数组的元素,从 start  位置开始。如果不指定，则  splice()  将只删除数组元素。</li>
+</ul>
+</blockquote>
+<p><strong>4.返回值</strong></p>
+<blockquote>
+<p><strong>由被删除的元素组成的一个数组。如果只删除了一个元素，则返回只包含一个元素的数组。如果没有删除元素，则返回空数组。</strong></p>
+</blockquote>
+<p><strong>5.实例</strong></p>
+<ul>
+<li>删除某个元素</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let ary = [1,2,3,3,4,5,6]</span><br><span class="line">ary.splice(2,1);</span><br><span class="line">console.log(ary); // [1,2,3,4,5,6]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>替换某个元素</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let ary = [1,2,3,3,5,6]</span><br><span class="line">ary.splice(3,1,4);</span><br><span class="line">console.log(ary); // [1,2,3,4,5,6]</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>删除最后 n 个元素</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let ary = [1,2,3,3,5,6]</span><br><span class="line">ary.splice(-2);</span><br><span class="line">console.log(ary); // [1,2,3,4]</span><br></pre></td></tr></table></figure>
+
+<h3 id="reverse"><a href="#reverse" class="headerlink" title="reverse"></a>reverse</h3><p><strong>1.语法</strong></p>
+<blockquote>
+<p>arr.reverse()</p>
+</blockquote>
+<p><strong>2.作用</strong></p>
+<blockquote>
+<p><strong>颠倒数组中元素的位置</strong></p>
+</blockquote>
+<p><strong>3.参数</strong></p>
+<p>无</p>
+<p><strong>4.返回值</strong></p>
+<blockquote>
+<p><strong>颠倒后的数组</strong></p>
+</blockquote>
+<p><strong>5.实例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let ary = [1,2,3,4,5]</span><br><span class="line">ary.reverse();</span><br><span class="line">console.log(ary); // [5,4,3,2,1]</span><br></pre></td></tr></table></figure>
+
+<h3 id="copyWith"><a href="#copyWith" class="headerlink" title="copyWith"></a>copyWith</h3><p><strong>1.语法</strong></p>
+<blockquote>
+<p>arr.copyWithin(target[, start[, end]])</p>
+</blockquote>
+<p><strong>2.作用</strong></p>
+<blockquote>
+<p><strong>复制数组的一部分到同一数组中的另一个位置</strong></p>
+</blockquote>
+<p><strong>3.参数</strong></p>
+<blockquote>
+<p>target</p>
+<ul>
+<li>0 为基底的索引，复制序列到该位置。</li>
+<li>如果是负数，target  将从末尾开始计算。</li>
+<li>如果  target  大于等于  arr.length，将会不发生拷贝。 -如果  target  在  start  之后，复制 的序列将被修改以符合  arr.length。</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>start</p>
+<ul>
+<li>0 为基底的索引，开始复制元素的起始位置。</li>
+<li>如果是负数，start  将从末尾开始计算。</li>
+<li>如果  start  被忽略，copyWithin  将会从 0 开始复制。</li>
+</ul>
+</blockquote>
+<blockquote>
+<p>end</p>
+<ul>
+<li>0 为基底的索引，开始复制元素的结束位置。</li>
+<li>copyWithin  将会拷贝到该位置，但不包括 end 这个位置的元素。</li>
+<li>如果是负数，end 将从末尾开始计算。</li>
+<li>如果 end 被忽略，copyWithin 方法将会一直复制至数组结尾（默认为  arr.length）。</li>
+</ul>
+</blockquote>
+<p><strong>4.返回值</strong></p>
+<blockquote>
+<p><strong>改变后的数组</strong></p>
+</blockquote>
+<p><strong>5.实例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[1, 2, 3, 4, 5].copyWithin(-2)         // [1, 2, 3, 1, 2]</span><br><span class="line"></span><br><span class="line">[1, 2, 3, 4, 5].copyWithin(0, 3)       // [4, 5, 3, 4, 5]</span><br><span class="line"></span><br><span class="line">[1, 2, 3, 4, 5].copyWithin(0, 3, 4)    // [4, 2, 3, 4, 5]</span><br><span class="line"></span><br><span class="line">[1, 2, 3, 4, 5].copyWithin(-2, -3, -1) // [1, 2, 3, 3, 4]</span><br></pre></td></tr></table></figure>
+
+<h3 id="fill"><a href="#fill" class="headerlink" title="fill"></a>fill</h3><p><strong>1.语法</strong></p>
+<blockquote>
+<p>arr.fill(value[, start[, end]])</p>
+</blockquote>
+<p><strong>2.作用</strong></p>
+<blockquote>
+<p><strong>用一个固定值填充一个数组中从起始索引到终止索引内的全部元素。不包括终止索引</strong></p>
+</blockquote>
+<p><strong>3.参数</strong></p>
+<blockquote>
+<p>value<br>用来填充数组元素的值。</p>
+</blockquote>
+<blockquote>
+<p>start （可选）<br>起始索引，默认值为 0。</p>
+</blockquote>
+<blockquote>
+<p>end （可选）<br>终止索引，默认值为 this.length（不包含终止索引）</p>
+</blockquote>
+<p><strong>4.返回值</strong></p>
+<blockquote>
+<p><strong>修改后的数组</strong></p>
+</blockquote>
+<p><strong>5.实例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">const ary = [1, 2, 3, 4];</span><br><span class="line">console.log(ary.fill(0, 2, 4)); // [1, 2, 0, 0]</span><br><span class="line"></span><br><span class="line">const ary = [1, 2, 3, 4];</span><br><span class="line">console.log(ary.fill(5, 1));    // [1, 5, 5, 5]</span><br><span class="line"></span><br><span class="line">const ary = [1, 2, 3, 4];</span><br><span class="line">console.log(ary.fill(6));       // [6, 6, 6, 6]</span><br></pre></td></tr></table></figure>
+
+<p>省略终止索引</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const ary = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];</span><br><span class="line">console.log(ary.fill(0, 2)); // [1, 2, 0, 0, 0, 0, 0, 0, 0, 0]</span><br></pre></td></tr></table></figure>
+
+<h2 id="不改变自身值的方法"><a href="#不改变自身值的方法" class="headerlink" title="不改变自身值的方法"></a>不改变自身值的方法</h2><h3 id="concat"><a href="#concat" class="headerlink" title="concat"></a>concat</h3><p><strong>1.语法</strong></p>
+<blockquote>
+<p>var new_array &#x3D; old_array.concat(value1[, value2[, …[, valueN]]])</p>
+</blockquote>
+<p><strong>2.作用</strong></p>
+<blockquote>
+<p><strong>合并两个或多个数组</strong></p>
+</blockquote>
+<p><strong>3.参数</strong></p>
+<blockquote>
+<p>valueN 可选</p>
+<ul>
+<li>将数组和&#x2F;或值连接成新数组。</li>
+<li>如果省略了 valueN 参数参数，则 concat 会返回一个它所调用的已存在的数组的浅拷贝。</li>
+</ul>
+</blockquote>
+<p><strong>4.返回值</strong></p>
+<blockquote>
+<p><strong>新的 Array 实例</strong></p>
+</blockquote>
+<p><strong>5.实例</strong><br>合并两个数组</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const ary1 = [&#x27;九&#x27;,&#x27;九&#x27;];</span><br><span class="line">const ary2 = [&#x27;欧&#x27;];</span><br><span class="line">let ary3 = ary1.concat(ary2);</span><br><span class="line">console.log(ary3); // [&#x27;九&#x27;,&#x27;九&#x27;,&#x27;欧&#x27;]</span><br></pre></td></tr></table></figure>
+
+<p>合并三个数组</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const ary1 = [1,2,3];</span><br><span class="line">const ary2 = [4,5,6];</span><br><span class="line">const ary3 = [7,8,9];</span><br><span class="line">let ary4 = ary1.concat(ary2,ary3);</span><br><span class="line">console.log(ary4); // [1,2,3,4,5,6,7,8,9]</span><br></pre></td></tr></table></figure>
+
+<p>将值连接到数组</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const ary1 = [1,2,3];</span><br><span class="line">const ary2 = [7,8,9];</span><br><span class="line">let ary3 = ary1.concat(4,5,6,ary2);</span><br><span class="line">console.log(ary3); // [1,2,3,4,5,6,7,8,9]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="flat"><a href="#flat" class="headerlink" title="flat"></a>flat</h3><p><strong>1.语法</strong></p>
+<blockquote>
+<p>var newArray &#x3D; arr.flat([depth])</p>
+</blockquote>
+<p><strong>2.作用</strong></p>
+<blockquote>
+<p><strong>将多维数组转化为一维数组</strong></p>
+</blockquote>
+<p><strong>3.参数</strong></p>
+<blockquote>
+<p>指定要提取嵌套数组的结构深度，默认值为 1</p>
+</blockquote>
+<p><strong>4.返回值</strong></p>
+<blockquote>
+<p><strong>一个包含将数组与子数组中所有元素的新数组</strong></p>
+</blockquote>
+<p><strong>5.实例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">  let ary = [1, 2, [3, [4,[5,[6,[7]]]]]];</span><br><span class="line">  console.log(ary.flat());          // [1,2,3,[4,[5,[6,[7]]]]]</span><br><span class="line">  console.log(ary.flat(2));         // [1,2,3,4,[5,[6,[7]]]]</span><br><span class="line">  console.log(ary.flat(3));         // [1,2,3,4,5,[6,[7]]]</span><br><span class="line">// 传入的参数为“Infinity”时，无论是几维数组都会变成1维数组</span><br><span class="line">  console.log(ary.flat(Infinity));  // [1,2,3,4,5,6,7]</span><br></pre></td></tr></table></figure>
+
+<p>flat 方法会移除数组中的空项</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">let ary = [1, 2, , 4, 5];</span><br><span class="line">console.log(ary.flat()); // [1, 2, 4, 5]</span><br></pre></td></tr></table></figure>
+
+<h3 id="flatMap"><a href="#flatMap" class="headerlink" title="flatMap"></a>flatMap</h3><p><strong>1.语法</strong></p>
+<blockquote>
+<p>var new_array &#x3D; arr.flatMap(function callback(currentValue[, index[, array]]) { &#x2F;&#x2F; return element for new_array }[, thisArg])</p>
+</blockquote>
+<p><strong>2.作用</strong></p>
+<blockquote>
+<p><strong>使用映射函数映射每个元素，然后将结果压缩成一个新数组</strong></p>
+</blockquote>
+<p><strong>3.参数</strong></p>
+<blockquote>
+<p>callback：<br>可以生成一个新数组中元素的函数，包含一下三个参数：<br>currentValue：<br>当前正在数组中处理的元素<br>index(可选)：<br>数组中正在处理的当前元素的索引<br>array：<br>被调用 map 的数组<br>thisAry（可选）：<br>执行 callback 函数值，this 的值</p>
+</blockquote>
+<p><strong>4.返回值</strong></p>
+<blockquote>
+<p><strong>新数组</strong></p>
+</blockquote>
+<p><strong>5.实例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">let ary = [1, 2, 3, 4];</span><br><span class="line">console.log(ary.flatMap(x =&gt; [x * 2]));    // [2, 4, 6, 8]</span><br><span class="line">console.log(ary.flatMap(x =&gt; [[x * 2]]));  // [[2], [4], [6], [8]]</span><br></pre></td></tr></table></figure>
+
+<p><strong>6.原理</strong><br>先 map()再 flat()</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">let names = [&#x27;九&#x27;, &#x27;九&#x27;, &#x27;欧&#x27;];</span><br><span class="line">// 步骤 1: map</span><br><span class="line">let result = names.map((name, index) =&gt; [name, index]);</span><br><span class="line">// [ [&#x27;九&#x27;, 1], [&#x27;九&#x27;, 2 ], [&#x27;欧&#x27;，3]]</span><br><span class="line">// 步骤 2: flat</span><br><span class="line">result.flat();</span><br><span class="line">// [ &#x27;九&#x27;, 1, &#x27;九&#x27;, 2 ,&#x27;欧&#x27;,3]</span><br><span class="line"></span><br><span class="line">let names = [&#x27;九&#x27;, &#x27;九&#x27;, &#x27;欧&#x27;];</span><br><span class="line">let result = names.flatMap((name, index) =&gt; [name, index]);</span><br><span class="line">// [ &#x27;九&#x27;, 1, &#x27;九&#x27;, 2 ,&#x27;欧&#x27;,3]</span><br></pre></td></tr></table></figure>
+
+<h3 id="join"><a href="#join" class="headerlink" title="join"></a>join</h3><p><strong>1.语法</strong></p>
+<blockquote>
+<p>arr.join([separator])</p>
+</blockquote>
+<p><strong>2.作用</strong></p>
+<blockquote>
+<p><strong>将一个数组（或一个类数组对象）的所有元素连接成一个字符</strong></p>
+</blockquote>
+<p><strong>3.参数</strong></p>
+<blockquote>
+<p>separator 可选</p>
+<ul>
+<li>指定一个字符串来分隔数组的每个元素。</li>
+<li>如果需要，将分隔符转换为字符串。</li>
+<li>如果缺省该值，数组元素用逗号（,）分隔。</li>
+<li>如果 separator 是空字符串(“”)，则所有元素 之间都没有任何字符。</li>
+</ul>
+</blockquote>
+<p><strong>4.返回值</strong></p>
+<blockquote>
+<p><strong>一个所有数组元素连接的字符串。如果 arr.length 为 0，则返回空字符串</strong></p>
+</blockquote>
+<p><strong>5.实例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const ary = [&#x27;九&#x27;, &#x27;九&#x27;, &#x27;欧&#x27;];</span><br><span class="line">let ary = ary.join();       // &quot;九,九,欧&quot;</span><br><span class="line">let ary = ary.join(&#x27;, &#x27;);   // &quot;九, 九, 欧&quot;</span><br><span class="line">let ary = ary.join(&#x27; + &#x27;);  // &quot;九 + 九 + 欧&quot;</span><br><span class="line">let ary = ary.join(&#x27;&#x27;);     // &quot;九九欧&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>6.注意事项</strong></p>
+<p><strong>如果一个元素为 undefined 或 null，它会被转换为空字符串</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://tongxinyou.github.io/2022/10/31/js%E5%9F%BA%E7%A1%80-%E7%BB%A7%E6%89%BF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2294,7 +2742,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/tongju.github.io/archives">
-          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
