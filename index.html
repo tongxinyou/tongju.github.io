@@ -577,6 +577,151 @@
 
 <p><strong>6.注意事项</strong></p>
 <p><strong>如果一个元素为 undefined 或 null，它会被转换为空字符串</strong></p>
+<h3 id="slice"><a href="#slice" class="headerlink" title="slice"></a>slice</h3><p><strong>1.语法</strong></p>
+<blockquote>
+<p>arr.slice([begin[, end]])</p>
+</blockquote>
+<p><strong>2.作用</strong></p>
+<blockquote>
+<p><strong>将数组中一部分元素浅复制存入新的数组对象</strong></p>
+</blockquote>
+<p><strong>3.参数</strong></p>
+<blockquote>
+<p>begin （可选）<br>提取起始处的索引（从  0  开始），从该索引开始提取原数组元素。<br>如果该参数为负数，则表示从原数组中的倒数第几个元素开始提取。<br>slice(-2)  表示提取原数组中的倒数第二个元素到最后一个元素（包含最后一个元素）。<br>如果省略  begin，则  slice  从索引  0  开始。<br>如果  begin  大于原数组的长度，则会返回空数组。</p>
+</blockquote>
+<blockquote>
+<p>end （可选）<br>提取终止处的索引（从  0  开始），在该索引处结束提取原数组元素。<br>slice  会提取原数组中索引从  begin  到  end  的所有元素（包含  begin，但不包含  end）。<br>slice(1,4)  会提取原数组中从第二个元素开始一直到第四个元素的所有元素 （索引 为 1, 2, 3 的元素）。<br>如果该参数为负数，则它表示在原数组中的倒数第几个元素结束抽取。 <br>slice(-2,-1)  表示抽取了原数组中的倒数第二个元素到最后一个元素（不包含最后一个元素，也就是只有倒数第二个元素）。<br>如果  end  被省略，则  slice  会一直提取到原数组末尾。<br>如果  end  大于数组的长度，slice  也会一直提取到原数组末尾。</p>
+</blockquote>
+<p><strong>4.返回值</strong></p>
+<blockquote>
+<p><strong>一个含有被提取元素的新数组</strong></p>
+</blockquote>
+<p><strong>5.实例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const ary = [1,2,3,4,5];</span><br><span class="line">console.log(ary.slice(1,4));    // [2,3,4]</span><br><span class="line">console.log(ary.slice(0,100));  // [1,2,3,4,5]</span><br><span class="line">console.log(ary.slice(50,100)); // []</span><br></pre></td></tr></table></figure>
+
+<p><strong>6.应用</strong><br>将类数组转化为数组</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">function fn() &#123;</span><br><span class="line">    return Array.prototype.slice.call(arguments);</span><br><span class="line">&#125;</span><br><span class="line">console.log(fn(1, 2, 3)); // [1, 2, 3]</span><br></pre></td></tr></table></figure>
+
+<h3 id="toString-NaN"><a href="#toString-NaN" class="headerlink" title="toString"></a>toString</h3><p><strong>1.语法</strong></p>
+<blockquote>
+<p>arr.toString()</p>
+</blockquote>
+<p><strong>2.作用</strong></p>
+<blockquote>
+<p><strong>返回数组的字符串形式</strong></p>
+</blockquote>
+<p><strong>3.参数</strong></p>
+<p>无</p>
+<p><strong>4.返回值</strong></p>
+<blockquote>
+<p><strong>数组的字符串形式</strong></p>
+</blockquote>
+<p><strong>5.实例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">const array = [&#x27;九&#x27;, &#x27;九&#x27;, &#x27;欧&#x27;];</span><br><span class="line">let str = array.toString();</span><br><span class="line">console.log(str);        // 九,九,欧</span><br><span class="line">console.log(typeof str); // string</span><br></pre></td></tr></table></figure>
+
+<h3 id="toLocaleString-NaN"><a href="#toLocaleString-NaN" class="headerlink" title="toLocaleString"></a>toLocaleString</h3><p><strong>1.语法</strong></p>
+<blockquote>
+<p>arr.toLocaleString([locales[,options]]);</p>
+</blockquote>
+<p><strong>2.作用</strong></p>
+<blockquote>
+<p><strong>返回一个字符串表示数组中的元素。数组中的元素将使用各自的 toLocaleString 方法转成字符串，这些字符串将使用一个特定语言环境的字符串（如逗号 “,”）隔开</strong></p>
+</blockquote>
+<p><strong>3.参数</strong></p>
+<blockquote>
+<p>locales  可选<br>带有 BCP 47 语言标记的字符串或字符串数组。</p>
+</blockquote>
+<blockquote>
+<p>options  可选<br>一个可配置属性的对象，对于数字  Number.prototype.toLocaleString()<br>对于日期 Date.prototype.toLocaleString().</p>
+</blockquote>
+<p><strong>4.返回值</strong></p>
+<blockquote>
+<p><strong>表示数组元素的字符串</strong></p>
+</blockquote>
+<h3 id="indexOf"><a href="#indexOf" class="headerlink" title="indexOf"></a>indexOf</h3><p><strong>1.语法</strong></p>
+<blockquote>
+<p>arr.indexOf(searchElement[, fromIndex])</p>
+</blockquote>
+<p><strong>2.作用</strong></p>
+<blockquote>
+<p><strong>返回在数组中可以找到一个给定元素的第一个索引，如果不存在，则返回-1</strong></p>
+</blockquote>
+<p><strong>3.参数</strong></p>
+<blockquote>
+<p>searchElement<br>要查找的元素</p>
+</blockquote>
+<blockquote>
+<p>fromIndex  可选<br>开始查找的位置。<br>如果该索引值大于或等于数组长度，意味着不会在数组里查找，返回-1。<br>如果参数中提供的索引值是一个负值，则将其作为数组末尾的一个抵消，即-1 表示从最后一个元素开始查找，-2 表示从倒数第二个元素开始查找，以此类推。<br>注意：如果参数中提供的索引值是一个负值，并不改变其查找顺序，查找顺序仍然是从前向后查询数组。<br>如果抵消后的索引值仍小于 0，则整个数组都将会被 查询。其默认值为 0.</p>
+</blockquote>
+<p><strong>4.返回值</strong></p>
+<blockquote>
+<p><strong>首个被找到的元素在数组中的索引位置; 若没有找到则返回 -1</strong></p>
+</blockquote>
+<p><strong>5.实例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const ary = [5,6,7,8,5];</span><br><span class="line">ary.indexOf(5);     // 0</span><br><span class="line">ary.indexOf(1);     // -1</span><br><span class="line">ary.indexOf(5, 2);  // 4</span><br><span class="line">ary.indexOf(5, -2); // 4</span><br></pre></td></tr></table></figure>
+
+<h3 id="lastIndexOf"><a href="#lastIndexOf" class="headerlink" title="lastIndexOf"></a>lastIndexOf</h3><p><strong>1.语法</strong></p>
+<blockquote>
+<p>arr.lastIndexOf(searchElement[, fromIndex])</p>
+</blockquote>
+<p><strong>2.作用</strong></p>
+<blockquote>
+<p><strong>查找元素在数组中最后一次出现时的索引，如果没有，则返回-1</strong></p>
+</blockquote>
+<p><strong>3.参数</strong></p>
+<blockquote>
+<p>searchElement<br>被查找的元素。</p>
+</blockquote>
+<blockquote>
+<p>fromIndex  可选<br>从此位置开始逆向查找。默认为数组的长度减 1(arr.length - 1)，即整个数组都被查 找。<br>如果该值大于或等于数组的长度，则整个数组会被查找。如果为负值，将其视为从数组末尾向前的偏移。即使该值为负，数组仍然会被从后向前查找。<br>如果该值为负时，其绝对值大于数组长度，则方法返回 -1，即数组不会被查找。</p>
+</blockquote>
+<p><strong>4.返回值</strong></p>
+<blockquote>
+<p><strong>数组中该元素最后一次出现的索引，如未找到返回-1</strong></p>
+</blockquote>
+<p><strong>5.实例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">const ary = [5, 6, 7, 8, 5];</span><br><span class="line">ary.lastIndexOf(5);     // 4</span><br><span class="line">ary.lastIndexOf(1);     // -1</span><br><span class="line">ary.lastIndexOf(5, 2);  // 0</span><br><span class="line">ary.lastIndexOf(5, -2); // 0</span><br></pre></td></tr></table></figure>
+
+<h3 id="includes"><a href="#includes" class="headerlink" title="includes"></a>includes</h3><p><strong>1.语法</strong></p>
+<blockquote>
+<p>arr.includes(valueToFind[, fromIndex])</p>
+</blockquote>
+<p><strong>2.作用</strong></p>
+<blockquote>
+<p><strong>判断一个数组是否包含一个指定的值</strong></p>
+</blockquote>
+<p><strong>3.参数</strong></p>
+<blockquote>
+<p>valueToFind<br>需要查找的元素值。</p>
+</blockquote>
+<blockquote>
+<p>fromIndex  可选<br>从 fromIndex  索引处开始查找  valueToFind。<br>如果为负值，则按升序从  array.length + fromIndex  的索引开始搜<br>（即使从末尾开始往前跳  fromIndex  的绝对值个索引， 然后往后搜寻）默认为 0。</p>
+</blockquote>
+<p><strong>4.返回值</strong></p>
+<blockquote>
+<p><strong>布尔值</strong></p>
+</blockquote>
+<p><strong>5.实例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[1, 2, 3].includes(2);                 // true</span><br><span class="line">[1, 2, 3].includes(4);                 // false</span><br><span class="line">[1, 2, null].includes(null);           // true</span><br><span class="line">[1, 2, undefined].includes(undefined); // true</span><br><span class="line">[1, 2, NaN].includes(NaN);             // true</span><br></pre></td></tr></table></figure>
+
+<p><strong>6.注意事项</strong></p>
+<p><strong>使用 includes()比较字符串和字符时区分大小写 includes 方法与 indexOf 方法的功能有些类似，不同点在于 includes 方法可以找到 NaN 而 indexOf 不行</strong></p>
+<h3 id="toSource"><a href="#toSource" class="headerlink" title="toSource"></a>toSource</h3><p><strong>1.语法</strong></p>
+<blockquote>
+<p>array.toSource()</p>
+</blockquote>
+<p><strong>2.作用</strong></p>
+<blockquote>
+<p><strong>返回一个代表该数组的源代码的字符串</strong></p>
+</blockquote>
+<p><strong>3.参数</strong></p>
+<p>无</p>
+<p><strong>4.返回值</strong></p>
+<blockquote>
+<p><strong>代表数组源码的字符串</strong></p>
+</blockquote>
+<p><strong>5.实例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">var array = [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;];</span><br><span class="line">console.log(array.toSource()); // [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]</span><br></pre></td></tr></table></figure>
 
       
     </div>
