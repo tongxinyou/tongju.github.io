@@ -20,16 +20,20 @@
     var CONFIG = {"hostname":"tongxinyou.github.io","root":"/tongju.github.io/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="个人技术成长之路">
+  <meta name="description" content="跨域的定义跨域问题指的是不同站点之间，使用 ajax 无法相互调用的问题。跨域问题本质是浏览器的一种保护机制，它的初衷是为了保证用户的安全，防止恶意网站窃取数据。 但这个保护机制也带来了新的问题，它的问题是给不同站点之间的正常调用，也带来的阻碍，所以在浏览器环境下，跨域是指一个域下的文档或脚本试图去请求另一个域下的资源。  域 :由协议+域名+端口组成  正常情况下，如果我们通过 ajax 去请求">
 <meta property="og:type" content="article">
 <meta property="og:title" content="跨域问题">
 <meta property="og:url" content="https://tongxinyou.github.io/2022/11/04/%E7%BD%91%E7%BB%9C-%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="墨白的博客">
-<meta property="og:description" content="个人技术成长之路">
+<meta property="og:description" content="跨域的定义跨域问题指的是不同站点之间，使用 ajax 无法相互调用的问题。跨域问题本质是浏览器的一种保护机制，它的初衷是为了保证用户的安全，防止恶意网站窃取数据。 但这个保护机制也带来了新的问题，它的问题是给不同站点之间的正常调用，也带来的阻碍，所以在浏览器环境下，跨域是指一个域下的文档或脚本试图去请求另一个域下的资源。  域 :由协议+域名+端口组成  正常情况下，如果我们通过 ajax 去请求">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://tongxinyou.github.io/tongju.github.io/2022/11/04/%E7%BD%91%E7%BB%9C-%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/daili.jpg">
+<meta property="og:image" content="https://tongxinyou.github.io/tongju.github.io/2022/11/04/%E7%BD%91%E7%BB%9C-%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/jsonp.jpg">
+<meta property="og:image" content="https://tongxinyou.github.io/tongju.github.io/2022/11/04/%E7%BD%91%E7%BB%9C-%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/yujianqingqiu.jpg">
 <meta property="article:published_time" content="2022-11-04T14:22:55.470Z">
 <meta property="article:author" content="墨白">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://tongxinyou.github.io/tongju.github.io/2022/11/04/%E7%BD%91%E7%BB%9C-%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/daili.jpg">
 
 <link rel="canonical" href="https://tongxinyou.github.io/2022/11/04/%E7%BD%91%E7%BB%9C-%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/">
 
@@ -193,7 +197,183 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        
+        <h2 id="跨域的定义"><a href="#跨域的定义" class="headerlink" title="跨域的定义"></a>跨域的定义</h2><p>跨域问题指的是不同站点之间，使用 ajax 无法相互调用的问题。<strong>跨域问题本质是浏览器的一种保护机制，它的初衷是为了保证用户的安全，防止恶意网站窃取数据。</strong> 但这个保护机制也带来了新的问题，它的问题是给不同站点之间的正常调用，也带来的阻碍，所以<strong>在浏览器环境下，跨<font color="red">域</font>是指一个<font color="red">域</font>下的文档或脚本试图去请求另一个<font color="red">域</font>下的资源。</strong></p>
+<blockquote>
+<p><strong><font color="red">域</font></strong> :由协议+域名+端口组成</p>
+</blockquote>
+<p>正常情况下，如果我们通过 ajax 去请求另一个域下的资源时是不会成功的，浏览器默认会阻止这种行为，因为它违背了浏览器的<strong>同源策略</strong>。</p>
+<h2 id="同源策略"><a href="#同源策略" class="headerlink" title="同源策略"></a>同源策略</h2><blockquote>
+<p>同源策略（SOP: Same Origin Policy）是一种约定，由 Netscape 公司 1995 年引入浏览器，它是浏览器最核心也最基本的安全功能，如果缺少了同源策略，浏览器很容易受到 XSS、CSFR 等攻击。</p>
+</blockquote>
+<p>简单来说就是指 <strong>协议 + 域名 + 端口</strong> 三者相同，如果违背了同源策略那么以下行为将得不到浏览器的支持：</p>
+<p>1、获取 Cookie、LocalStorage 等<br>2、获取 DOM 和 Js 对象<br>3、发送 AJAX 请求</p>
+<h2 id="跨域的三种情况"><a href="#跨域的三种情况" class="headerlink" title="跨域的三种情况"></a>跨域的三种情况</h2><p>在请求时，如果出现了以下情况中的任意一种，那么它就是跨域请求：</p>
+<p>1、协议不同，如 http 和 https；<br>2、域名不同；<br>3、端口不同。</p>
+<p>具体情况入下表：</p>
+<table>
+<thead>
+<tr>
+<th>当前的 URL</th>
+<th>被请求的 URL</th>
+<th>是否跨域</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="http://wwww.test.com/">http://wwww.test.com/</a></td>
+<td><a target="_blank" rel="noopener" href="http://wwww.test.com/index.html">http://wwww.test.com/index.html</a></td>
+<td>否</td>
+<td>同源（协议、域名、端口号相同）</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://wwww.test.com/">http://wwww.test.com/</a></td>
+<td><a target="_blank" rel="noopener" href="https://wwww.test.com/index.html">https://wwww.test.com/index.html</a></td>
+<td>跨域</td>
+<td>协议不同（http&#x2F;https）</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://wwww.test.com/">http://wwww.test.com/</a></td>
+<td><a target="_blank" rel="noopener" href="http://wwww.baidu.com/">http://wwww.baidu.com/</a></td>
+<td>跨域</td>
+<td>主域名不同（test&#x2F;baidu）</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://wwww.test.com/">http://wwww.test.com/</a></td>
+<td><a target="_blank" rel="noopener" href="http://blog.test.com/">http://blog.test.com/</a></td>
+<td>跨域</td>
+<td>子域名不同（www&#x2F;blog）</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://wwww.test.com:8080/">http://wwww.test.com:8080/</a></td>
+<td><a target="_blank" rel="noopener" href="http://wwww.test.com:7001/">http://wwww.test.com:7001/</a></td>
+<td>跨域</td>
+<td>端口号不同（8080&#x2F;7001）</td>
+</tr>
+</tbody></table>
+<h2 id="跨域解决方法"><a href="#跨域解决方法" class="headerlink" title="跨域解决方法"></a>跨域解决方法</h2><p>有多种方式解决跨域问题，常见的有：</p>
+<ul>
+<li>代理，（常用）</li>
+<li>CORS，（常用））</li>
+<li>JSONP</li>
+</ul>
+<p>无论使用哪一种方式，都是要让浏览器知道，我这次跨域请求的是自己人，就不要拦截了。</p>
+<h3 id="1、代理"><a href="#1、代理" class="headerlink" title="1、代理"></a>1、代理</h3><p>对于前端开发而言，大部分的跨域问题，都是通过代理解决的</p>
+<p><strong>代理适用的场景是：生产环境不发生跨域，但开发环境发生跨域</strong></p>
+<p>因此，只需要在开发环境使用代理解决跨域即可，这种代理又称之为开发代理</p>
+<p><img src="/tongju.github.io/2022/11/04/%E7%BD%91%E7%BB%9C-%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/daili.jpg" alt="代理"></p>
+<p>在实际开发中，只需要对开发服务器稍加配置即可完成</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// vue 的开发服务器代理配置</span><br><span class="line">// vue.config.js</span><br><span class="line">module.exports = &#123;</span><br><span class="line">  devServer: &#123; // 配置开发服务器</span><br><span class="line">    proxy: &#123; // 配置代理</span><br><span class="line">      &quot;/api&quot;: &#123; // 若请求路径以 /api 开头</span><br><span class="line">        target: &quot;http://dev.taobao.com&quot;, // 将其转发到 http://dev.taobao.com</span><br><span class="line">      &#125;,</span><br><span class="line">    &#125;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2、-JSONP"><a href="#2、-JSONP" class="headerlink" title="2、 JSONP"></a>2、 JSONP</h3><p>在 CORS 出现之前，人们想了一种奇妙的办法来实现跨域，这就是 JSONP。<br>要实现 JSONP，需要浏览器和服务器来一个天衣无缝的绝妙配合。<br>JSONP 的做法是：<strong>当需要跨域请求时，不使用 AJAX，转而生成一个 script 元素去请求服务器，由于浏览器并不阻止 script 元素的请求，这样请求可以到达服务器。服务器拿到请求后，响应一段 JS 代码，这段代码实际上是一个函数调用，调用的是客户端预先生成好的函数，并把浏览器需要的数据作为参数传递到函数中，从而间接的把数据传递给客户端。</strong></p>
+<p><img src="/tongju.github.io/2022/11/04/%E7%BD%91%E7%BB%9C-%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/jsonp.jpg" alt="JSONP"></p>
+<p>但 JSONP 有着明显的缺点，即其只能支持 GET 请求。</p>
+<h3 id="3、COPRS"><a href="#3、COPRS" class="headerlink" title="3、COPRS"></a>3、COPRS</h3><p>CORS 是基于 http1.1 的一种跨域解决方案，它的全称是 Cross-Origin Resource Sharing，跨域资源共享。</p>
+<p>它的总体思路是：如果浏览器要跨域访问服务器的资源，需要获得服务器的允许</p>
+<p>而要知道，一个请求可以附带很多信息，从而会对服务器造成不同程度的影响<br>比如有的请求只是获取一些新闻，有的请求会改动服务器的数据<br>针对不同的请求，CORS 规定了三种不同的交互模式，分别是：</p>
+<p>简单请求<br>需要预检的请求<br>附带身份凭证的请求</p>
+<p>这三种模式从上到下层层递进，请求可以做的事越来越多，要求也越来越严格。<br>下面分别说明三种请求模式的具体规范。</p>
+<h4 id="简单请求"><a href="#简单请求" class="headerlink" title="简单请求"></a>简单请求</h4><p>当浏览器端运行了一段 ajax 代码（无论是使用 XMLHttpRequest 还是 fetch api），浏览器会首先判断它属于哪一种请求模式</p>
+<h5 id="简单请求的判定"><a href="#简单请求的判定" class="headerlink" title="简单请求的判定"></a>简单请求的判定</h5><p>当请求同时满足以下条件时，浏览器会认为它是一个简单请求：</p>
+<p>1、请求方法属于下面的一种：</p>
+<ul>
+<li>get</li>
+<li>post</li>
+<li>head</li>
+</ul>
+<p>2、请求头仅包含安全的字段，常见的安全字段如下：</p>
+<ul>
+<li>Accept</li>
+<li>Accept-Language</li>
+<li>Content-Language</li>
+<li>Content-Type</li>
+<li>DPR</li>
+<li>Downlink</li>
+<li>Save-Data</li>
+<li>Viewport-Width</li>
+<li>Width</li>
+</ul>
+<p>3、请求头如果包含 <strong>Content-Type</strong>，仅限下面的值之一：</p>
+<ul>
+<li>text&#x2F;plain</li>
+<li>multipart&#x2F;form-data</li>
+<li>application&#x2F;x-www-form-urlencoded</li>
+</ul>
+<p>如果以上三个条件同时满足，浏览器判定为简单请求。</p>
+<p>下面是一些例子：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">// 简单请求</span><br><span class="line">fetch(&#x27;http://crossdomain.com/api/news&#x27;);</span><br><span class="line"></span><br><span class="line">// 请求方法不满足要求，不是简单请求</span><br><span class="line">fetch(&#x27;http://crossdomain.com/api/news&#x27;, &#123;</span><br><span class="line">  method: &#x27;PUT&#x27;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// 加入了额外的请求头，不是简单请求</span><br><span class="line">fetch(&#x27;http://crossdomain.com/api/news&#x27;, &#123;</span><br><span class="line">  headers: &#123;</span><br><span class="line">    a: 1,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// 简单请求</span><br><span class="line">fetch(&#x27;http://crossdomain.com/api/news&#x27;, &#123;</span><br><span class="line">  method: &#x27;post&#x27;,</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// content-type不满足要求，不是简单请求</span><br><span class="line">fetch(&#x27;http://crossdomain.com/api/news&#x27;, &#123;</span><br><span class="line">  method: &#x27;post&#x27;,</span><br><span class="line">  headers: &#123;</span><br><span class="line">    &#x27;content-type&#x27;: &#x27;application/json&#x27;,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h5 id="简单请求的交互规范"><a href="#简单请求的交互规范" class="headerlink" title="简单请求的交互规范"></a>简单请求的交互规范</h5><p>当浏览器判定某个 ajax 跨域请求是简单请求时，会发生以下的事情</p>
+<p>1.请求头中会自动添加 Origin 字段</p>
+<p>比如，在页面<strong><a target="_blank" rel="noopener" href="http://my.com/index.html">http://my.com/index.html</a></strong>中有以下代码造成了跨域</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">// 简单请求</span><br><span class="line">fetch(&#x27;http://crossdomain.com/api/news&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>请求发出后，请求头会是下面的格式：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">GET /api/news/ HTTP/1.1</span><br><span class="line">Host: crossdomain.com</span><br><span class="line">Connection: keep-alive</span><br><span class="line">...</span><br><span class="line">Referer: http://my.com/index.html</span><br><span class="line">Origin: http://my.com</span><br></pre></td></tr></table></figure>
+
+<p>最后一行 Origin 字段会告诉服务器，是哪个源地址在跨域请求</p>
+<p>2.服务器响应头中应包含 <strong>Access-Control-Allow-Origin</strong></p>
+<p>当服务器收到请求后，如果允许该请求跨域访问，需要在响应头中添加 Access-Control-Allow-Origin 字段</p>
+<p>该字段的值可以是：</p>
+<ul>
+<li>*：表示我很开放，什么人我都允许访问</li>
+<li>具体的源：比如<a target="_blank" rel="noopener" href="http://my.com,表示我就允许你访问/">http://my.com，表示我就允许你访问</a></li>
+</ul>
+<blockquote>
+<p>实际上，这两个值对于客户端<a target="_blank" rel="noopener" href="http://my.com而言,都一样,因为客户端才不会管其他源服务器允不允许,就关心自己是否被允许/">http://my.com而言，都一样，因为客户端才不会管其他源服务器允不允许，就关心自己是否被允许</a><br>当然，服务器也可以维护一个可被允许的源列表，如果请求的 Origin 命中该列表，才响应*或具体的源<br><strong>为了避免后续的麻烦，强烈推荐响应具体的源</strong></p>
+</blockquote>
+<p>假设服务器做出了以下的响应：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Date: Tue, 21 Apr 2020 08:03:35 GMT</span><br><span class="line">...</span><br><span class="line">Access-Control-Allow-Origin: http://my.com</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">消息体中的数据</span><br></pre></td></tr></table></figure>
+
+<p>当浏览器看到服务器允许自己访问后，它就把响应顺利的交给 js，以完成后续的操作</p>
+<h4 id="需要预检的请求"><a href="#需要预检的请求" class="headerlink" title="需要预检的请求"></a>需要预检的请求</h4><p>简单的请求对服务器的威胁不大，所以允许使用上述的简单交互即可完成。<br>但是，如果浏览器不认为这是一种简单请求，就会按照下面的流程进行：</p>
+<p>1、<strong>浏览器发送预检请求，询问服务器是否允许</strong><br>2、<strong>服务器允许</strong><br>3、<strong>浏览器发送真实请求</strong><br>4、<strong>服务器完成真实的响应</strong></p>
+<p>比如，在页面<a target="_blank" rel="noopener" href="http://my.com/index.html%E4%B8%AD%E6%9C%89%E4%BB%A5%E4%B8%8B%E4%BB%A3%E7%A0%81%E9%80%A0%E6%88%90%E4%BA%86%E8%B7%A8%E5%9F%9F">http://my.com/index.html中有以下代码造成了跨域</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 需要预检的请求</span><br><span class="line">fetch(&#x27;http://crossdomain.com/api/user&#x27;, &#123;</span><br><span class="line">  method: &#x27;POST&#x27;, // post 请求</span><br><span class="line">  headers: &#123;</span><br><span class="line">    // 设置请求头</span><br><span class="line">    a: 1,</span><br><span class="line">    b: 2,</span><br><span class="line">    &#x27;content-type&#x27;: &#x27;application/json&#x27;,</span><br><span class="line">  &#125;,</span><br><span class="line">  body: JSON.stringify(&#123; name: &#x27;袁小进&#x27;, age: 18 &#125;), // 设置请求体</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>浏览器发现它不是一个简单请求，则会按照下面的流程与服务器交互</p>
+<h5 id="1-浏览器发送预检请求，询问服务器是否允许"><a href="#1-浏览器发送预检请求，询问服务器是否允许" class="headerlink" title="1.浏览器发送预检请求，询问服务器是否允许"></a>1.浏览器发送预检请求，询问服务器是否允许</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">OPTIONS /api/user HTTP/1.1</span><br><span class="line">Host: crossdomain.com</span><br><span class="line">...</span><br><span class="line">Origin: http://my.com</span><br><span class="line">Access-Control-Request-Method: POST</span><br><span class="line">Access-Control-Request-Headers: a, b, content-type</span><br></pre></td></tr></table></figure>
+
+<p>可以看出，这并非我们想要发出的真实请求，请求中不包含我们的请求头，也没有消息体。</p>
+<p>这是一个预检请求，它的目的是询问服务器，是否允许后续的真实请求。</p>
+<p>预检请求没有请求体，它包含了后续真实请求要做的事情</p>
+<p>预检请求有以下特征：</p>
+<ul>
+<li>请求方法为 OPTIONS</li>
+<li>没有请求体</li>
+<li>请求头中包含<ul>
+<li>Origin：请求的源，和简单请求的含义一致</li>
+<li>Access-Control-Request-Method：后续的真实请求将使用的请求方法</li>
+<li>Access-Control-Request-Headers：后续的真实请求会改动的请求头</li>
+</ul>
+</li>
+</ul>
+<h5 id="2-服务器允许"><a href="#2-服务器允许" class="headerlink" title="2. 服务器允许"></a>2. 服务器允许</h5><p>服务器收到预检请求后，可以检查预检请求中包含的信息，如果允许这样的请求，需要响应下面的消息格式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Date: Tue, 21 Apr 2020 08:03:35 GMT</span><br><span class="line">...</span><br><span class="line">Access-Control-Allow-Origin: http://my.com</span><br><span class="line">Access-Control-Allow-Methods: POST</span><br><span class="line">Access-Control-Allow-Headers: a, b, content-type</span><br><span class="line">Access-Control-Max-Age: 86400</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<p>对于预检请求，不需要响应任何的消息体，只需要在响应头中添加：</p>
+<ul>
+<li>Access-Control-Allow-Origin：和简单请求一样，表示允许的源</li>
+<li>Access-Control-Allow-Methods：表示允许的后续真实的请求方法</li>
+<li>Access-Control-Allow-Headers：表示允许改动的请求头</li>
+<li>Access-Control-Max-Age：告诉浏览器，多少秒内，对于同样的请求源、方法、头，都不需要再发送预检请求了</li>
+</ul>
+<h5 id="3-浏览器发送真实请求"><a href="#3-浏览器发送真实请求" class="headerlink" title="3. 浏览器发送真实请求"></a>3. 浏览器发送真实请求</h5><p>预检被服务器允许后，浏览器就会发送真实请求了，上面的代码会发生下面的请求数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">POST /api/user HTTP/1.1</span><br><span class="line">Host: crossdomain.com</span><br><span class="line">Connection: keep-alive</span><br><span class="line">...</span><br><span class="line">Referer: http://my.com/index.html</span><br><span class="line">Origin: http://my.com</span><br><span class="line"></span><br><span class="line">&#123;&quot;name&quot;: &quot;xiaoming&quot;, &quot;age&quot;: 18 &#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="4-服务器响应真实请求"><a href="#4-服务器响应真实请求" class="headerlink" title="4. 服务器响应真实请求"></a>4. 服务器响应真实请求</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 OK</span><br><span class="line">Date: Tue, 21 Apr 2020 08:03:35 GMT</span><br><span class="line">...</span><br><span class="line">Access-Control-Allow-Origin: http://my.com</span><br><span class="line">...</span><br><span class="line"></span><br><span class="line">添加用户成功</span><br></pre></td></tr></table></figure>
+
+<p>可以看出，当完成预检之后，后续的处理与简单请求相同<br>下图简述了整个交互过程</p>
+<p><img src="/tongju.github.io/2022/11/04/%E7%BD%91%E7%BB%9C-%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98/yujianqingqiu.jpg" alt="预检的请求"></p>
+<h4 id="附带身份凭证的请求"><a href="#附带身份凭证的请求" class="headerlink" title="附带身份凭证的请求"></a>附带身份凭证的请求</h4><p>默认情况下，ajax 的跨域请求并不会附带 cookie，这样一来，某些需要权限的操作就无法进行</p>
+<p>不过可以通过简单的配置就可以实现附带 cookie</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// xhr</span><br><span class="line">var xhr = new XMLHttpRequest();</span><br><span class="line">xhr.withCredentials = true;</span><br><span class="line"></span><br><span class="line">// fetch api</span><br><span class="line">fetch(url, &#123;</span><br><span class="line">  credentials: &#x27;include&#x27;,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>这样一来，该跨域的 ajax 请求就是一个附带身份凭证的请求<br>当一个请求需要附带 cookie 时，无论它是简单请求，还是预检请求，都会在请求头中添加 cookie 字段<br>而服务器响应时，需要明确告知客户端：服务器允许这样的凭据<br>告知的方式也非常的简单，只需要在响应头中添加：Access-Control-Allow-Credentials: true 即可<br>对于一个附带身份凭证的请求，若服务器没有明确告知，浏览器仍然视为跨域被拒绝。<br>另外要特别注意的是：<strong>对于附带身份凭证的请求，服务器不得设置 Access-Control-Allow-Origin 的值为*。这就是为什么不推荐使用*的原因</strong>.</p>
+<h3 id="最后补充"><a href="#最后补充" class="headerlink" title="最后补充"></a>最后补充</h3><p>在跨域访问时，JS 只能拿到一些最基本的响应头，如：Cache-Control、Content-Language、Content-Type、Expires、Last-Modified、Pragma，如果要访问其他头，则需要服务器设置本响应头。<br><strong>Access-Control-Expose-Headers</strong> 头让服务器把允许浏览器访问的头放入白名单，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Access-Control-Expose-Headers: authorization, a, b</span><br></pre></td></tr></table></figure>
+
+<p>这样 JS 就能够访问指定的响应头了。</p>
+
     </div>
 
     
@@ -270,6 +450,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%A8%E5%9F%9F%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">1.</span> <span class="nav-text">跨域的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8C%E6%BA%90%E7%AD%96%E7%95%A5"><span class="nav-number">2.</span> <span class="nav-text">同源策略</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%A8%E5%9F%9F%E7%9A%84%E4%B8%89%E7%A7%8D%E6%83%85%E5%86%B5"><span class="nav-number">3.</span> <span class="nav-text">跨域的三种情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%A8%E5%9F%9F%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">跨域解决方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81%E4%BB%A3%E7%90%86"><span class="nav-number">4.1.</span> <span class="nav-text">1、代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81-JSONP"><span class="nav-number">4.2.</span> <span class="nav-text">2、 JSONP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81COPRS"><span class="nav-number">4.3.</span> <span class="nav-text">3、COPRS</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E8%AF%B7%E6%B1%82"><span class="nav-number">4.3.1.</span> <span class="nav-text">简单请求</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E8%AF%B7%E6%B1%82%E7%9A%84%E5%88%A4%E5%AE%9A"><span class="nav-number">4.3.1.1.</span> <span class="nav-text">简单请求的判定</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E8%AF%B7%E6%B1%82%E7%9A%84%E4%BA%A4%E4%BA%92%E8%A7%84%E8%8C%83"><span class="nav-number">4.3.1.2.</span> <span class="nav-text">简单请求的交互规范</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9C%80%E8%A6%81%E9%A2%84%E6%A3%80%E7%9A%84%E8%AF%B7%E6%B1%82"><span class="nav-number">4.3.2.</span> <span class="nav-text">需要预检的请求</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1-%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8F%91%E9%80%81%E9%A2%84%E6%A3%80%E8%AF%B7%E6%B1%82%EF%BC%8C%E8%AF%A2%E9%97%AE%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%98%AF%E5%90%A6%E5%85%81%E8%AE%B8"><span class="nav-number">4.3.2.1.</span> <span class="nav-text">1.浏览器发送预检请求，询问服务器是否允许</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%85%81%E8%AE%B8"><span class="nav-number">4.3.2.2.</span> <span class="nav-text">2. 服务器允许</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-%E6%B5%8F%E8%A7%88%E5%99%A8%E5%8F%91%E9%80%81%E7%9C%9F%E5%AE%9E%E8%AF%B7%E6%B1%82"><span class="nav-number">4.3.2.3.</span> <span class="nav-text">3. 浏览器发送真实请求</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%93%8D%E5%BA%94%E7%9C%9F%E5%AE%9E%E8%AF%B7%E6%B1%82"><span class="nav-number">4.3.2.4.</span> <span class="nav-text">4. 服务器响应真实请求</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%99%84%E5%B8%A6%E8%BA%AB%E4%BB%BD%E5%87%AD%E8%AF%81%E7%9A%84%E8%AF%B7%E6%B1%82"><span class="nav-number">4.3.3.</span> <span class="nav-text">附带身份凭证的请求</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E5%90%8E%E8%A1%A5%E5%85%85"><span class="nav-number">4.4.</span> <span class="nav-text">最后补充</span></a></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
