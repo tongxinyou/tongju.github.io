@@ -148,6 +148,173 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://tongxinyou.github.io/2022/10/16/HTTP%E5%8D%8F%E8%AE%AE%E2%80%94%E2%80%94%E6%A6%82%E5%BF%B5%E4%B8%8E%E7%BB%93%E6%9E%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/tongju.github.io/images/avatar.gif">
+      <meta itemprop="name" content="墨白">
+      <meta itemprop="description" content="个人技术成长之路">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="墨白的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/tongju.github.io/2022/10/16/HTTP%E5%8D%8F%E8%AE%AE%E2%80%94%E2%80%94%E6%A6%82%E5%BF%B5%E4%B8%8E%E7%BB%93%E6%9E%84/" class="post-title-link" itemprop="url">HTTP概念与结构</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/tongju.github.io/categories/HTTP%E5%8D%8F%E8%AE%AE/" itemprop="url" rel="index"><span itemprop="name">HTTP协议</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="HTTP-概念"><a href="#HTTP-概念" class="headerlink" title="HTTP 概念"></a>HTTP 概念</h3><p><strong>Http (HTTP-Hypertext transfer protocol)是超文本传输协议</strong>, 是一个简单的请求-响应协议，HTTP 基于 TCP&#x2F;IP 通信协议来传递数据（HTML 文件, 图片文件, 查询结果等）。它通常运行在 TCP 之上。它指定了客户端可能发送给服务器什么样的消息以及得到什么样的响应</p>
+<blockquote>
+<ul>
+<li>HTTP 默认端口号为 80，但是你也可以改为 8080 或者其他端口。</li>
+<li>HTTP 是<strong>无连接</strong>的：无连接的含义是限制每次连接只处理一个请求。服务器处理完客户的请求，并收到客户的应答后，即断开连接。采用这种方式可以节省传输时间。</li>
+<li>HTTP 是<strong>媒体独立</strong>的：这意味着，只要客户端和服务器知道如何处理的数据内容，任何类型的数据都可以通过 HTTP 发送。客户端以及服务器指定使用适合的 MIME-type 内容类型。</li>
+<li>HTTP 是<strong>无状态</strong>的：HTTP 协议是无状态协议。无状态是指协议对于事务处理没有记忆能力。缺少状态意味着如果后续处理需要前面的信息，则它必须重传，这样可能导致每次连接传送的数据量增大。另一方面，在服务器不需要先前信息时它的应答就较快。</li>
+</ul>
+</blockquote>
+<h3 id="HTTP-工作方式"><a href="#HTTP-工作方式" class="headerlink" title="HTTP 工作方式"></a>HTTP 工作方式</h3><ul>
+<li>HTTP 是基于客户&#x2F;服务器模式，且面向连接的。典型的 HTTP 事务处理有如下的过程：<blockquote>
+<ol>
+<li>客户与服务器建立连接；</li>
+<li>客户向服务器提出请求,请求报文：【请求方法、URL、协议版本、请求头部和请求数据】；</li>
+<li>服务器接受请求，并根据请求返回相应的文件作为应答,响应的内容：【协议的版本、成功或失败代码、服务器信息、响应头部和响应数据】；</li>
+<li>客户与服务器关闭连接。</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<h3 id="HTTP-消息结构"><a href="#HTTP-消息结构" class="headerlink" title="HTTP 消息结构"></a>HTTP 消息结构</h3><h4 id="客户端请求报文"><a href="#客户端请求报文" class="headerlink" title="客户端请求报文"></a>客户端请求报文</h4><blockquote>
+<p>请求格式：请求行、请求头部、空行、请求正文（请求体）</p>
+</blockquote>
+<p><strong>请求行</strong>包括以下三点：</p>
+<ul>
+<li>请求方法（get、post 等）</li>
+<li>请求对应的 URL 地址，它和报文头的 Host 属性组成完整的请求 URL</li>
+<li>协议名称及版本号</li>
+</ul>
+<blockquote>
+<p>GET test HTTP&#x2F;1.1</p>
+</blockquote>
+<p><strong>请求头部</strong>包含若干个属性，格式为“头部字段名:值”，服务端据此获取客户端的信息。<br>作用:HTTP 消息的元数据（metadata）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Connection: keep-alive</span><br><span class="line">Host: www.baidu.com</span><br></pre></td></tr></table></figure>
+
+<p><strong>请求体</strong>将一个页面表单中的组件值通过 param1&#x3D;value1&amp;param2&#x3D;value2 的键值对形式编码成一个格式化串，它承载多个请求参数的数据。不但请求体可以传递请求参数，请求 URL 也可以通过类似于“test\name&#x3D;test&amp;owd&#x3D;123456”的方式传递请求参数</p>
+<h4 id="服务端响应报文"><a href="#服务端响应报文" class="headerlink" title="服务端响应报文"></a>服务端响应报文</h4><blockquote>
+<p>响应格式：状态行、响应报头、空行和响应正文。</p>
+</blockquote>
+<p><strong>状态行</strong>包括以下：</p>
+<ul>
+<li>协议版本</li>
+<li>状态码，表示请求是否成功（一般用 200 表示成功)</li>
+<li>状态描述，代表状态码的含义，（比如成功是 OK）</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 200 ok</span><br></pre></td></tr></table></figure>
+
+<p><strong>响应报头</strong>包含若干个属性，格式为“头部字段名:值”，客户端据此获取服务端返回的信息。<br>作用:HTTP 消息的元数据（metadata）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Access-Control-Allow-Origin: *</span><br><span class="line">cache-control: no-cache</span><br><span class="line">Content-Security-Policy: script-src &#x27;self&#x27; blob: filesystem:; object-src &#x27;self&#x27; blob: filesystem:;</span><br><span class="line">Content-Type: text/css</span><br></pre></td></tr></table></figure>
+
+<p><strong>响应正文</strong>是返回给客户端的响应数据，可能是字符数据，也可能是字节数据，是可选的，由服务端决定。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">＜body＞</span><br><span class="line">＜!-- test 这是一个示例--＞</span><br><span class="line">＜/body＞</span><br></pre></td></tr></table></figure>
+
+<h3 id="HTTP-请求方式"><a href="#HTTP-请求方式" class="headerlink" title="HTTP 请求方式"></a>HTTP 请求方式</h3><ul>
+<li>HTTP0.9 只支持 GET 请求。</li>
+<li>HTTP1.0 定义了三种请求方法： GET, POST 和 HEAD 方法。</li>
+<li>HTTP1.1 新增了六种请求方法：OPTIONS、PUT、PATCH、DELETE、TRACE 和 CONNECT 方法。</li>
+<li>GET、PUT、DELETE、PATCH 是幂等的,POST 是非幂等的</li>
+</ul>
+<blockquote>
+<p><strong>GET</strong>:请求指定页面信息，并返回实体主体。<br><strong>HEAD</strong>:类似于 GET 请求，只不过返回的响应中没有具体的内容，用于获取报头，比如做下载之前获取文件大小等。<br><strong>POST</strong>：向指定资源提交数据进行处理请求（例如提交表单或上传文件），数据被包含在请求中，POST 请求可能会导致新的资源的建立或已有资源的修改。<br><strong>PUT</strong>：从客户端向服务器传送的数据取代指定的文档的内容。<br><strong>DELETE</strong>：请求服务器删除指定的页面。<br><strong>CONNECT</strong>：HTTP&#x2F;1.1 协议中预留给能够将连接改为管道方式的代理服务器。<br><strong>OPTIONS</strong>：允许客户端查看服务器的性能。<br><strong>TRACE</strong>：回显服务器收到的请求，主要用于测试或诊断。<br><strong>PATCH</strong>：是对 PUT 方法的补充，用来对已知资源进行局部更新。</p>
+</blockquote>
+<h3 id="HTTP-状态码"><a href="#HTTP-状态码" class="headerlink" title="HTTP 状态码"></a>HTTP 状态码</h3><blockquote>
+<p>1xx: 信息，服务器收到请求，需要请求者继续执行操作(100-101)<br>2xx: 成功，操作被成功接收并处理(200-206)<br>3xx: 重定向，需要进一步的操作以完成请求(300-307)<br>4xx: 客户端错误，请求包含语法错误或无法完成请求(400-423)<br>5xx: 服务器错误，服务器在处理请求的过程中发生了错误(500-505)</p>
+</blockquote>
+<p>几个常见的状态码具体的含义：</p>
+<ul>
+<li>200 OK 服务器成功处理了请求（</li>
+<li>301&#x2F;302 Moved Permanently（重定向）请求的 URL 已移走。Response 中应该包含一个 Location URL, 说明资源现在所处的位置</li>
+<li>304 Not Modified（未修改）客户的缓存资源是最新的， 要客户端使用缓存</li>
+<li>404 Not Found 未找到资源</li>
+<li>500 服务器遇到一个错误，使其无法为请求提供服务</li>
+</ul>
+<h3 id="HTTP-版本之间的区别"><a href="#HTTP-版本之间的区别" class="headerlink" title="HTTP 版本之间的区别"></a>HTTP 版本之间的区别</h3><h4 id="HTTP-0-9"><a href="#HTTP-0-9" class="headerlink" title="HTTP 0.9"></a>HTTP 0.9</h4><ul>
+<li>HTTP&#x2F;0.9 是第一个版本的 HTTP 协议，已过时。它的组成极其简单，<strong>只允许客户端发送 GET 这一种请求</strong>，且<strong>不支持请求头</strong>。由于没有协议头，造成了 HTTP&#x2F;0.9 协议只支持一种内容，即纯文本。不过网页仍然支持用 HTML 语言格式化，同时无法插入图片。</li>
+<li>HTTP&#x2F;0.9 具有典型的<strong>无状态性</strong>，每个事务独立进行处理，事务结束时就释放这个连接。由此可见，HTTP 协议的无状态特点在其第一个版本 0.9 中已经成型。一次 HTTP&#x2F;0.9 的传输首先要建立一个由客户端到 web 服务器的 TCP 连接，由客户端发起一个请求，然后由 web 服务器返回页面内容，然后连接会关闭。如果请求的页面不存在，也不会返回任何状态码。</li>
+</ul>
+<h4 id="HTTP-1-0"><a href="#HTTP-1-0" class="headerlink" title="HTTP 1.0"></a>HTTP 1.0</h4><p>Http 1.0 是 HTTP 协议的第二个版本，开始在客户端与服务端通讯中指定版本号。<br>比 HTTP 0.9 增加了以下特性：</p>
+<ul>
+<li>请求与响应支持头部。</li>
+<li>响应对象以一个响应状态码开始。</li>
+<li>响应对象不只限于超文本。</li>
+<li>开始支持客户端通过 POST 方法向 web 服务器提交数据，支持 GET、HEAD、POST 方法。</li>
+<li>支持长连接（但默认还是使用短连接）、缓存机制以及身份认证。</li>
+</ul>
+<h4 id="HTTP-1-1"><a href="#HTTP-1-1" class="headerlink" title="HTTP 1.1"></a>HTTP 1.1</h4><p>HTTP 1.1 是 HTTP 协议的第三个版本，目前使用最广泛以及主流的的协议版本<br>比 HTTP1.0 增加了以下内容：</p>
+<ul>
+<li>默认为长连接</li>
+<li>提供了范围请求功能（宽带优化）</li>
+<li>提供了虚拟主机的功能（HOST 域）</li>
+<li>缓存处理字段</li>
+<li>错误通知的管理</li>
+</ul>
+<h4 id="HTTP-2-0"><a href="#HTTP-2-0" class="headerlink" title="HTTP 2.0"></a>HTTP 2.0</h4><p>HTTP 2.0 是 HTTP 协议的第四个版本，比 HTTP1.1 增加了以下内容：</p>
+<ul>
+<li>二进制分帧，HTTP&#x2F;2.0 的所有帧都采用二进制编码。</li>
+<li>多路复用</li>
+<li>头部压缩</li>
+<li>请求优先级</li>
+<li>服务端推送</li>
+</ul>
+<h3 id="HTTP、HTTPS-的区别"><a href="#HTTP、HTTPS-的区别" class="headerlink" title="HTTP、HTTPS 的区别"></a>HTTP、HTTPS 的区别</h3><p><strong>HTTP</strong>是超文本传输协议，数据明文传输，所以会被抓包导致信息泄露，有安全风险问题！</p>
+<p><strong>HTTPS</strong> 则是具有安全性的 SSL 加密传输协议。</p>
+<p><strong>HTTP</strong> 和 <strong>HTTPS</strong> 使用的是完全不同的连接方式用的端口也不一样,前者是 80,后者是 443。HTTP 的连接很简单,是无状态的。HTTPS 协议是由 <strong>SSL+HTTP</strong> 协议构建的可进行加密传输、身份认证的网络协议。HTTPS 协议需要到 <strong>CA</strong> 付费申请证书,</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://tongxinyou.github.io/2022/10/16/js%E5%9F%BA%E7%A1%80-promise/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -546,7 +713,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/tongju.github.io/archives">
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
